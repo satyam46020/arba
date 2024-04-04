@@ -28,7 +28,19 @@ const updateProduct = async (req, res) => {
 // Get all Products
 const getAllProducts = async (req, res) => {
   try {
-    const products = await Product.find();
+    let query = {};
+
+    if (req.query.category) {
+      query.category = req.query.category;
+    }
+
+    let sort = {};
+
+    if (req.query.sort === 'price') {
+      sort.price = 1;
+    }
+
+    const products = await Product.find(query).sort(sort);
     res.json(products);
   } catch (error) {
     console.error(error.message);
