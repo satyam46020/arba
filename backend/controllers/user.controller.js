@@ -45,7 +45,7 @@ const storage = multer.diskStorage({
       });
     } catch (error) {
       console.error(error.message);
-      res.status(500).send('Server Error');
+      res.status(500).send(error);
     }
   };
 
@@ -69,20 +69,40 @@ const login = async (req, res) => {
     res.status(200).json({ token, user });
   } catch (error) {
     console.error(error.message);
-    res.status(500).send('Server Error');
+    res.status(500).send(error);
   }
 };
 
-const forgotPassword = async (req, res) => {
-  //logic for forgot password
+const emailVerification = async (req, res) => {
+  try {
+    const {email} = req.body;
+    let user = await User.findOne({email});
+    console.log(user)
+    res.status(200).send(user._id)
+  } catch (error) {
+    res.status(500).send(error);
+  }
 };
 
+const updatePassword = async (req, res) => {
+  try {
+    const {_id, password} = req.body;
+    const hashedPassword = await bcrypt.hash(password, 10);
+    let user = await User.findByIdAndUpdate( _id, { password : hashedPassword }, {new : true});
+    
+    res.send(user.password)
+    
+  } catch (error) {
+    res.status(500).send(error);
+  }
+}
+
 const updateProfile = async (req, res) => {
-  const { fullName, avatar, password } = req.body;
+  const { fullName, password, avatar } = req.body;
 
   try {
-    
-    let user = await User.findById(req.user.id);
+    let {userId} = req;
+    let user = await User.findById(userId);
 
     if (fullName) user.fullName = fullName;
     if (avatar) user.avatar = avatar;
@@ -90,19 +110,18 @@ const updateProfile = async (req, res) => {
       const hashedPassword = await bcrypt.hash(password, 10);
       user.password = hashedPassword;
     }
-
+    res.status(200).json( user );
     await user.save();
-
-    res.json({ user });
   } catch (error) {
     console.error(error.message);
-    res.status(500).send('Server Error');
+    res.status(500).send(error);
   }
 };
 
 module.exports = {
   createUser,
   login,
-  forgotPassword,
+  emailVerification,
+  updatePassword,
   updateProfile
 };

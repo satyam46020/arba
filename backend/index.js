@@ -4,6 +4,8 @@ const cors = require('cors');
 const connection=require("./config/db")
 const userRouter=require("./routes/user.route");
 const auth = require('./middlewares/auth');
+const category = require('./routes/category.route')
+const product = require('./routes/product.route')
 
 require("dotenv").config()
 
@@ -13,6 +15,8 @@ app.use(cors());
 app.use(express.json());
 
 app.use('/', userRouter)
+app.use('/category', auth, category)
+app.use('/product', auth, product)
 
 const PORT = process.env.PORT ;
 
