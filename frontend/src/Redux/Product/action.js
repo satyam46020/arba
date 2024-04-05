@@ -16,7 +16,7 @@ export const fetchProducts = () => {
   return async (dispatch) => {
     dispatch({ type: FETCH_PRODUCTS_REQUEST });
     try {
-      const response = await fetch('https://arba-u5ed.onrender.com//product', {
+      const response = await fetch('https://arba-u5ed.onrender.com/product', {
         headers: {
           Authorization: `Bearer ${getToken()}`,
         },
@@ -36,7 +36,7 @@ export const fetchProducts = () => {
 export const createProduct = (productData) => {
   return async (dispatch) => {
     try {
-      const response = await fetch('https://arba-u5ed.onrender.com//product', {
+      const response = await fetch('https://arba-u5ed.onrender.com/product', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -59,7 +59,7 @@ export const createProduct = (productData) => {
 export const updateProduct = (productId, productData) => {
   return async (dispatch) => {
     try {
-      const response = await fetch(`https://arba-u5ed.onrender.com//product/${productId}`, {
+      const response = await fetch(`https://arba-u5ed.onrender.com/product/${productId}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
@@ -82,7 +82,7 @@ export const updateProduct = (productId, productData) => {
 export const deleteProduct = (productId) => {
   return async (dispatch) => {
     try {
-      const response = await fetch(`https://arba-u5ed.onrender.com//product/${productId}`, {
+      const response = await fetch(`https://arba-u5ed.onrender.com/product/${productId}`, {
         method: 'DELETE',
         headers: {
           Authorization: `Bearer ${getToken()}`,

@@ -116,12 +116,6 @@ const Login = () => {
               Forgot Password?
             </Button>
           </form>
-          {loginError && (
-            <Alert status="error" mb={4}>
-              <AlertIcon />
-              Invalid credentials. Please try again.
-            </Alert>
-          )}
           <Flex justify="center" mt={4}>
             <Text>Don't have an account? </Text>
             <Button as={Link} to="/register" variant="link" colorScheme="blue" ml={1}>

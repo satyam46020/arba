@@ -5,7 +5,7 @@ export const signup = (details) => {
     try {
       dispatch({ type: SIGNUP_REQUEST });
       console.log(details);
-      const res=await fetch('https://arba-u5ed.onrender.com//register', {
+      const res=await fetch('https://arba-u5ed.onrender.com/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

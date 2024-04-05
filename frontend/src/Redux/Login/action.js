@@ -4,7 +4,7 @@ export const login = (details) => {
   return async (dispatch) => {
     try {
       dispatch({ type: LOGIN_REQUEST });
-      const res = await fetch(`https://arba-u5ed.onrender.com//login`, {
+      const res = await fetch(`https://arba-u5ed.onrender.com/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -30,7 +30,7 @@ export const forgotPassword = (email) => {
   return async (dispatch) => {
     try {
       dispatch({ type: FORGOT_PASSWORD_REQUEST });
-      const res = await fetch(`https://arba-u5ed.onrender.com//forgot-password`, {
+      const res = await fetch(`https://arba-u5ed.onrender.com/forgot-password`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -55,7 +55,7 @@ export const updatePassword = (newPassword) => {
   return async (dispatch) => {
     dispatch({ type: UPDATE_PASSWORD_REQUEST });
     try {
-      const response = await fetch('https://arba-u5ed.onrender.com//forgot-password', {
+      const response = await fetch('https://arba-u5ed.onrender.com/forgot-password', {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
@@ -78,7 +78,7 @@ export const updateProfile = (details) => {
   return async (dispatch) => {
     try {
       dispatch({ type: UPDATE_PROFILE_REQUEST });
-      const res = await fetch(`https://arba-u5ed.onrender.com//profile`, {
+      const res = await fetch(`https://arba-u5ed.onrender.com/profile`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
