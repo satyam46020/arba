@@ -22,6 +22,7 @@ export const login=(details)=>{
     }
 }
 export const logout = () => {
+  localStorage.setItem('token','')
   return {
     type: LOGOUT,
   };
