@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchProducts, deleteProduct } from '../Redux/Product/action';
-import { Table, Thead, Tbody, Tr, Th, Td, Button, Box, Text } from '@chakra-ui/react';
+import { Table, Thead, Tbody, Tr, Th, Td, Button, Box, Input, Flex } from '@chakra-ui/react';
 import ProductModal from './ProductModal';
 
 const ProductTable = () => {
@@ -11,6 +11,7 @@ const ProductTable = () => {
   const productsPerPage = 5;
   const [isAddEditModalOpen, setIsAddEditModalOpen] = useState(false);
   const [productToEdit, setProductToEdit] = useState(null);
+  const [filterValue, setFilterValue] = useState('');
 
   useEffect(() => {
     dispatch(fetchProducts());
@@ -18,7 +19,10 @@ const ProductTable = () => {
 
   const indexOfLastProduct = currentPage * productsPerPage;
   const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
-  const currentProducts = products.slice(indexOfFirstProduct, indexOfLastProduct);
+  const filteredProducts = products.filter(product =>
+    product.title.toLowerCase().includes(filterValue.toLowerCase())
+  );
+  const currentProducts = filteredProducts.slice(indexOfFirstProduct, indexOfLastProduct);
 
   const handleAddProduct = () => {
     setIsAddEditModalOpen(true);
@@ -41,13 +45,25 @@ const ProductTable = () => {
     }
   };
 
+  const handleFilterChange = (e) => {
+    setFilterValue(e.target.value);
+  };
+
+  const handleRefresh = () => {
+    dispatch(fetchProducts());
+  };
+
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
     <>
-      <Button colorScheme="teal" onClick={handleAddProduct} mb={4}>
-        Add Product
-      </Button>
+      <Flex mb={4} justifyContent={'space-around'}>
+        <Input width="50%" placeholder="Search by title" value={filterValue} onChange={handleFilterChange} border="1px solid black" />
+        <Button ml={4} colorScheme="teal" onClick={handleRefresh}>Refresh</Button>
+        <Button colorScheme="teal" onClick={handleAddProduct} mb={4}>
+            Add Product
+        </Button>
+      </Flex>
       <Table variant="simple">
         <Thead>
           <Tr>
@@ -59,14 +75,14 @@ const ProductTable = () => {
           </Tr>
         </Thead>
         <Tbody>
-          {currentProducts.map((product) => (
+          {currentProducts?.map((product) => (
             <Tr key={product._id}>
               <Td>{product.title}</Td>
               <Td>{product.description}</Td>
               <Td>{product.price}</Td>
               <Td>{product.category}</Td>
               <Td>
-                <Button colorScheme="blue" mr={2} onClick={() => handleEditProduct(product)}>Edit</Button>
+                <Button colorScheme="teal" mr={2} onClick={() => handleEditProduct(product)}>Edit</Button>
                 <Button colorScheme="red" onClick={() => handleDeleteProduct(product._id)}>Delete</Button>
               </Td>
             </Tr>
@@ -74,7 +90,7 @@ const ProductTable = () => {
         </Tbody>
       </Table>
       <Box mt={4} display="flex" justifyContent="center">
-        {Array.from({ length: Math.ceil(products.length / productsPerPage) }, (_, i) => (
+        {Array.from({ length: Math.ceil(filteredProducts.length / productsPerPage) }, (_, i) => (
           <Button key={i} mx={1} colorScheme="teal" onClick={() => paginate(i + 1)}>{i + 1}</Button>
         ))}
       </Box>

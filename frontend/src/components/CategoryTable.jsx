@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchCategories, deleteCategory } from '../Redux/Category/action';
-import { Table, Thead, Tbody, Tr, Th, Td, Button, Box, Text } from '@chakra-ui/react';
+import { Table, Thead, Tbody, Tr, Th, Td, Button, Box, Input, Flex } from '@chakra-ui/react';
 import CategoryModal from './CategoryModal';
 
 const CategoryTable = () => {
@@ -11,6 +11,7 @@ const CategoryTable = () => {
   const categoriesPerPage = 5;
   const [isAddEditModalOpen, setIsAddEditModalOpen] = useState(false);
   const [categoryToEdit, setCategoryToEdit] = useState(null);
+  const [filterValue, setFilterValue] = useState('');
 
   useEffect(() => {
     dispatch(fetchCategories());
@@ -18,7 +19,10 @@ const CategoryTable = () => {
 
   const indexOfLastCategory = currentPage * categoriesPerPage;
   const indexOfFirstCategory = indexOfLastCategory - categoriesPerPage;
-  const currentCategories = categories.slice(indexOfFirstCategory, indexOfLastCategory);
+  const filteredCategories = categories.filter(category =>
+    category.name.toLowerCase().includes(filterValue.toLowerCase())
+  );
+  const currentCategories = filteredCategories.slice(indexOfFirstCategory, indexOfLastCategory);
 
   const handleAddCategory = () => {
     setIsAddEditModalOpen(true);
@@ -41,13 +45,25 @@ const CategoryTable = () => {
     }
   };
 
+  const handleFilterChange = (e) => {
+    setFilterValue(e.target.value);
+  };
+
+  const handleRefresh = () => {
+    dispatch(fetchCategories());
+  };
+
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
     <>
-      <Button colorScheme="teal" onClick={handleAddCategory} mb={4}>
-        Add Category
-      </Button>
+      <Flex mb={4} justifyContent={'space-around'}>
+        <Input width="50%" placeholder="Search by name" value={filterValue} onChange={handleFilterChange} border="1px solid black"/>
+        <Button ml={4} colorScheme="blue" onClick={handleRefresh}>Refresh</Button>
+        <Button colorScheme="blue" onClick={handleAddCategory} mb={4}>
+            Add Category
+        </Button>
+      </Flex>
       <Table variant="simple">
         <Thead>
           <Tr>
@@ -72,8 +88,8 @@ const CategoryTable = () => {
         </Tbody>
       </Table>
       <Box mt={4} display="flex" justifyContent="center">
-        {Array.from({ length: Math.ceil(categories.length / categoriesPerPage) }, (_, i) => (
-          <Button key={i} mx={1} colorScheme="teal" onClick={() => paginate(i + 1)}>{i + 1}</Button>
+        {Array.from({ length: Math.ceil(filteredCategories.length / categoriesPerPage) }, (_, i) => (
+          <Button key={i} mx={1} colorScheme="blue" onClick={() => paginate(i + 1)}>{i + 1}</Button>
         ))}
       </Box>
       <CategoryModal isOpen={isAddEditModalOpen} onClose={handleCloseModal} categoryToEdit={categoryToEdit} />

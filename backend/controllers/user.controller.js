@@ -17,6 +17,7 @@ const storage = multer.diskStorage({
     storage: storage,
     limits: { fileSize: 1024 * 1024 * 5 } 
   }).single('avatar');
+  console.log(storage)
   
   const createUser = async (req, res) => {
     try {
@@ -44,7 +45,7 @@ const storage = multer.diskStorage({
         res.json({ message: "SignUp successful", user: newUser });
       });
     } catch (error) {
-      console.error(error.message);
+      console.error(error);
       res.status(500).send(error);
     }
   };

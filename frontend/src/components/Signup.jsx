@@ -92,7 +92,7 @@ const Register = () => {
           <Heading as="h2" size="lg" mb={4}>
             Register
           </Heading>
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit} enctype="multipart/form-data">
             {/* Name field */}
             <FormControl mb={4} isInvalid={!!nameError}>
               <FormLabel>
