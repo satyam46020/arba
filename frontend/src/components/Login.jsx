@@ -37,6 +37,7 @@ const Login = () => {
 
   useEffect(() => {
     if (isAuth) {
+      localStorage.setItem("isopen",JSON.stringify(true));
       navigate("/Home");
     }
   }, [isAuth, navigate]);

@@ -23,6 +23,7 @@ const Navbar = () => {
 
     const handleLogout = () => {
         dispatch(logout());
+        localStorage.setItem("isopen",JSON.stringify(false));
         navigate('/');
     };
   return (

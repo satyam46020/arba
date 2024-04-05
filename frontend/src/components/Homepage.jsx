@@ -6,13 +6,16 @@ import { Box, Button, Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody,
 import { useNavigate } from "react-router-dom";
 
 export const Homepage = () => {
-  const [isOpen, setIsOpen] = useState(true);
+  const tcopen = JSON.parse(localStorage.getItem("isopen")) 
+  console.log(tcopen)
+  const [isOpen, setIsOpen] = useState(tcopen);
+const navigate = useNavigate();
 
-  const navigate = useNavigate();
-
-  const handleConfirm = () => {
+const handleConfirm = () => {
     setIsOpen(false);
-  };
+    localStorage.setItem("isopen",JSON.stringify(false));
+    
+};
 
   const handleClick =()=> {
     navigate('/product')
