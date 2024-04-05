@@ -2,9 +2,10 @@ import { legacy_createStore, applyMiddleware, combineReducers } from 'redux';
 import {thunk} from 'redux-thunk';
 import { loginReducer } from './Login/reducer';
 import { signupReducer } from './Register/reducer';
-import { productReducer } from './Product/reducer'
+import { productReducer } from './Product/reducer';
+import { categoryReducer } from './Category/reducer';
 
-const rootReducer = combineReducers({loginReducer, signupReducer, productReducer});
+const rootReducer = combineReducers({loginReducer, signupReducer, productReducer, categoryReducer});
 
 const store = legacy_createStore(rootReducer, applyMiddleware(thunk));
 

@@ -23,7 +23,7 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
-  const [loginError, setLoginError] = useState(false); // State to track login error
+  const [loginError, setLoginError] = useState(false); 
   const isAuth = useSelector((store) => store.loginReducer.isAuth);
 
   useEffect(() => {
@@ -41,9 +41,7 @@ const Login = () => {
     }
 
     dispatch(login({ email, password }))
-        // If login is successful, isAuth will be true
         if (!isAuth) {
-          // If login fails, set loginError to true
           setLoginError(true);
         }
   };
@@ -92,12 +90,12 @@ const Login = () => {
               Log In
             </Button>
           </form >
-            {/* {loginError && ( 
+            {loginError && ( 
               <Alert status="error" mb={4}>
                 <AlertIcon />
                 Invalid credentials. Please try again.
               </Alert>
-            )} */}
+            )}
           <Flex justify="center" mt={4}>
             <Text>Don't have an account? </Text>
             <Button as={Link} to="/register" variant="link" colorScheme="blue" ml={1}>

@@ -1,5 +1,3 @@
-// actions.js
-
 import {
   FETCH_PRODUCTS_REQUEST,
   FETCH_PRODUCTS_SUCCESS,
@@ -62,7 +60,7 @@ export const updateProduct = (productId, productData) => {
   return async (dispatch) => {
     try {
       const response = await fetch(`http://localhost:5000/product/${productId}`, {
-        method: 'PUT',
+        method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${getToken()}`,

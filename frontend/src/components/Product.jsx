@@ -12,12 +12,12 @@ const Product = () => {
   }, [dispatch]);
 
   const handleAddToCart = (productId) => {
-    // Dispatch an action to add the product to the cart
-    // You can implement this part based on your Redux setup
     console.log(`Product added to cart: ${productId}`);
   };
 
   return (
+
+    <>
     <Flex direction="column" align="center" justify="center" mt={8}>
       <Heading as="h2" size="lg" mb={4}>
         Products
@@ -44,6 +44,7 @@ const Product = () => {
         ))}
       </Flex>
     </Flex>
+    </>
   );
 };
 

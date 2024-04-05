@@ -3,14 +3,20 @@ import Navbar from "./Navbar";
 import Carousel from "./Carousel";
 import Product from "./Product";
 import { Box, Button, Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalFooter, Text } from "@chakra-ui/react";
+import { useNavigate } from "react-router-dom";
 
 export const Homepage = () => {
   const [isOpen, setIsOpen] = useState(true);
+
+  const navigate = useNavigate();
 
   const handleConfirm = () => {
     setIsOpen(false);
   };
 
+  const handleClick =()=> {
+    navigate('/product')
+  }
   return (
     <>
       <Modal isOpen={isOpen}>
@@ -43,6 +49,7 @@ export const Homepage = () => {
       <Box>
         <Product />
       </Box>
+      <Button colorScheme="teal" onClick={handleClick}>All Products</Button>
     </>
   );
 };

@@ -19,12 +19,12 @@ const Register = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [name, setName] = useState("");
-  const [userName, setUserName] = useState(""); // Added userName state
+  const [userName, setUserName] = useState(""); 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [avatar, setAvatar] = useState(null); // State to store selected avatar file
+  const [avatar, setAvatar] = useState(null);
   const [nameError, setNameError] = useState("");
-  const [userNameError, setUserNameError] = useState(""); // Added userNameError state
+  const [userNameError, setUserNameError] = useState("");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const isAuth = useSelector((store) => store.signupReducer.isAuth);
@@ -62,7 +62,6 @@ const Register = () => {
     }
 
     if (isValid) {
-      // Create form data to include avatar file
       const formData={};
       formData.fullName= name;
       formData.userName=userName;
@@ -74,7 +73,6 @@ const Register = () => {
     }
   };
 
-  // If user is already authenticated, navigate to home page
   useEffect(() => {
     if (isAuth) {
       navigate("/");

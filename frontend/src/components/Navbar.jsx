@@ -27,25 +27,21 @@ const Navbar = () => {
     };
   return (
     <Box>
-      {/* Navbar */}
       <Flex p={4} color="Red">
-        {/* Logo */}
-        <Link to="/">
+        <Link to="/home">
           <Image src={logo} alt="Logo" h={10} />
         </Link>
         <Spacer />
-        {/* Cart Button */}
         <Button as={Link} to="/cart" leftIcon={<FiShoppingCart />} variant="solid" colorScheme="teal" mr={4}>
           Cart
         </Button>
-        {/* Profile Dropdown */}
         <Menu>
           <MenuButton as={Button} rightIcon={<FaUserCircle />} variant="Blue" colorScheme="Blue">
             Profile
           </MenuButton>
           <MenuList>
-            <MenuItem as={Link} to="/profile">My Store</MenuItem>
-            <MenuItem as={Link} to="/settings">Profile</MenuItem>
+            <MenuItem as={Link} to="/mystore">My Store</MenuItem>
+            <MenuItem as={Link} to="/profile">Profile</MenuItem>
             <MenuItem onClick={handleLogout}>Logout</MenuItem>
           </MenuList>
         </Menu>
