@@ -31,6 +31,9 @@ const Profile = () => {
   const handleUpdatePassword = () => {
     dispatch(updatePassword(userData._id,newPassword));
     setIsPasswordModalOpen(false);
+    if(JSON.parse(localStorage.getItem("isPasswordChanged"))){
+      alert("Password changed successfully!");
+    }
   };
 
   const handleOpenPasswordModal = () => {

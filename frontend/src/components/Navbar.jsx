@@ -19,7 +19,7 @@ const Navbar = () => {
             const cartData = JSON.parse(savedCart);
             setCart(cartData);
         }
-    }, [savedCart]);
+    }, [cart]);
 
     const handleLogout = () => {
         dispatch(logout());

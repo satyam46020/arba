@@ -39,8 +39,9 @@ export const forgotPassword = (email) => {
         body: JSON.stringify({ email }),
       });
       const data = await res.json();
+      localStorage.setItem("userId",JSON.stringify(data));
+      console.log(data)
       if (res.ok) {
-        // Handle success response if needed
         dispatch({ type: FORGOT_PASSWORD_SUCCESS });
       } else {
         throw new Error(data.msg || 'Request failed');
@@ -65,7 +66,13 @@ export const updatePassword = (id,newPassword) => {
         body: JSON.stringify({ _id : id, password: newPassword }),
       });
       if (!response.ok) {
+        localStorage.setItem('isPasswordChanged', JSON.stringify(false));
         throw new Error('Failed to update password');
+
+      }
+      if (response.ok) {
+        localStorage.setItem('isPasswordChanged', JSON.stringify(true));
+
       }
       const updatedPassword = await response.json();
       dispatch({ type: UPDATE_PASSWORD_SUCCESS, payload: updatedPassword });

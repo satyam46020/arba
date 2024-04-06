@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
-import { login } from "../Redux/Login/action";
+import { forgotPassword, login, updatePassword } from "../Redux/Login/action";
 import {
   Box,
   Button,
@@ -31,10 +31,11 @@ const Login = () => {
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
   const [loginError, setLoginError] = useState(false);
-  const [isForgotPasswordModalOpen, setIsForgotPasswordModalOpen] = useState(
-    false
-  );
+  const [isForgotPasswordModalOpen, setIsForgotPasswordModalOpen] = useState(false);
+  const [isPasswordResetModalOpen, setIsPasswordResetModalOpen] = useState(false);
   const [isLoggingIn, setIsLoggingIn] = useState(false);
+  const [newPassword, setNewPassword] = useState('');
+  const [newPasswordError, setNewPasswordError] = useState(false);
   const isAuth = useSelector((store) => store.loginReducer.isAuth);
 
   useEffect(() => {
@@ -68,6 +69,26 @@ const Login = () => {
     setIsForgotPasswordModalOpen(false);
   };
 
+  const handleClosePasswordResetModal = () => {
+    setIsPasswordResetModalOpen(false);
+  };
+
+  const handleEmailSubmit = () => {
+    dispatch(forgotPassword(email));
+
+    setIsForgotPasswordModalOpen(false);
+    setIsPasswordResetModalOpen(true);
+  };
+
+  const User_id = JSON.parse(localStorage.getItem("userId"))
+  const handleNewPasswordSubmit = () => {
+    dispatch(updatePassword(User_id,newPassword))
+    setIsPasswordResetModalOpen(false);
+    if(JSON.parse(localStorage.getItem("isPasswordChanged"))){
+      alert("Password changed successfully!");
+    }
+  };
+
   return (
     <Flex align="center" justify="center" h="100vh" >
       <Center>
@@ -77,10 +98,9 @@ const Login = () => {
           borderWidth="1px"
           borderRadius="lg"
           overflow="hidden"
-          display="flex" // Make the box display flex
-          alignItems="center" // Align items vertically
+          display="flex" 
+          alignItems="center" 
         >
-        {/* <img src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcQOiNw4WnHjRuSC5vuLo56kKxpKxK05-da4dnhHvbTj4fy_qMQa" alt="Login Image" style={{ marginRight: "20px" , width : "50%" }} /> Render your image */}
           <Box >
             <Heading as="h2" size="lg" mb={4}>
               Login
@@ -146,17 +166,42 @@ const Login = () => {
           <ModalBody>
             <FormControl mb={4}>
               <FormLabel>Email</FormLabel>
-              <Input type="email" placeholder="Enter your email" />
+              <Input type="email" value={email} onChange={(e) => { setEmail(e.target.value)}} placeholder="Enter your email" />
             </FormControl>
           </ModalBody>
           <ModalFooter>
             <Button
               colorScheme="teal"
-              onClick={handleCloseForgotPasswordModal}
+              onClick={handleEmailSubmit}
             >
               Submit
             </Button>
             <Button onClick={handleCloseForgotPasswordModal}>Cancel</Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+
+      <Modal
+        isOpen={isPasswordResetModalOpen}
+        onClose={handleClosePasswordResetModal}
+      >
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Reset Password</ModalHeader>
+          <ModalBody>
+            <FormControl mb={4}>
+              <FormLabel>New Password</FormLabel>
+              <Input type="password" value={newPassword} onChange={(e) => { setNewPassword(e.target.value)}} placeholder="Enter your new password" />
+            </FormControl>
+          </ModalBody>
+          <ModalFooter>
+            <Button
+              colorScheme="teal"
+              onClick={handleNewPasswordSubmit}
+            >
+              Submit
+            </Button>
+            <Button onClick={handleClosePasswordResetModal}>Cancel</Button>
           </ModalFooter>
         </ModalContent>
       </Modal>

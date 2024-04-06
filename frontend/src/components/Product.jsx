@@ -49,7 +49,7 @@ const Product = () => {
         </Heading>
         <Flex flexWrap="wrap" justifyContent="center">
           {products.map((product) => (
-            <Box key={product.id} maxW="sm" borderWidth="1px" borderRadius="lg" overflow="hidden" m={4} boxShadow="md">
+            <Box key={product._id} maxW="sm" borderWidth="1px" borderRadius="lg" overflow="hidden" m={4} boxShadow="md">
               <Image src={product.image} alt={product.title} />
               <Box p={4}>
                 <Text fontSize="lg" fontWeight="semibold" mb={2}>
@@ -61,14 +61,14 @@ const Product = () => {
                 <Text fontSize="md" fontWeight="semibold" color="teal.600" mb={4}>
                   ₹{product.price}
                 </Text>
-                {cart[product.id] ? ( 
+                {cart[product._id] ? ( 
                   <Flex align="center">
-                    <Button colorScheme="teal" size="sm" onClick={() => handleRemoveFromCart(product.id)}>-</Button>
-                    <Text mx={2}>{cart[product.id]}</Text> 
-                    <Button colorScheme="teal" size="sm" onClick={() => handleAddToCart(product.id)}>+</Button>
+                    <Button colorScheme="teal" size="sm" onClick={() => handleRemoveFromCart(product._id)}>-</Button>
+                    <Text mx={2}>{cart[product._id]}</Text> 
+                    <Button colorScheme="teal" size="sm" onClick={() => handleAddToCart(product._id)}>+</Button>
                   </Flex>
                 ) : (
-                  <Button colorScheme="teal" size="sm" onClick={() => handleAddToCart(product.id)}>Add to Cart</Button>
+                  <Button colorScheme="teal" size="sm" onClick={() => handleAddToCart(product._id)}>Add to Cart</Button>
                 )}
               </Box>
             </Box>
