@@ -54,7 +54,7 @@ const Login = () => {
     }
 
     setIsLoggingIn(true);
-    await dispatch(login({ email, password }));
+    dispatch(login({ email, password }));
     setIsLoggingIn(false);
     if (!isAuth) {
       setLoginError(true);
@@ -91,12 +91,11 @@ const Login = () => {
 
   return (
     <Flex align="center" justify="center" h="100vh" >
-      <Center>
+      <Center width={1200}>
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRuMCjTjLy6tF52cg1RjGzSEX8jdLSbbCjkyWyfU_tYIoqUd2Fv" alt="" width="30%" />
         <Box
           p={10}
           maxW="md"
-          borderWidth="1px"
-          borderRadius="lg"
           overflow="hidden"
           display="flex" 
           alignItems="center" 

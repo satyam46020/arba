@@ -15,9 +15,11 @@ const Profile = () => {
   const [avatar, setAvatar] = useState(null);
   const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
   const [newPassword, setNewPassword] = useState('');
-
   const [isTermsModalOpen, setIsTermsModalOpen] = useState(false);
-
+  
+  const tcopen = JSON.parse(localStorage.getItem("isopen"))
+  const [isOpen, setIsOpen] = useState(tcopen);
+  
   const handleUpdateProfile = () => {
     dispatch(updateProfile(userData._id, name, userName, avatar)); 
     setIsUpdateModalOpen(false);
@@ -26,7 +28,6 @@ const Profile = () => {
   const handleOpenUpdateModal = () => {
     setIsUpdateModalOpen(true);
   };
-
 
   const handleUpdatePassword = () => {
     dispatch(updatePassword(userData._id,newPassword));
@@ -44,8 +45,39 @@ const Profile = () => {
     setIsTermsModalOpen(true);
   };
 
+  const handleConfirm = () => {
+    setIsOpen(false);
+    localStorage.setItem("isopen", JSON.stringify(false));
+
+  };
+  const handleCancel = () => {
+    setIsOpen(false);
+    localStorage.setItem("isopen", JSON.stringify(true));
+  }
+
+
   return (
     <Box p={4}>
+      <Modal isOpen={isOpen}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Terms and Conditions</ModalHeader>
+          <ModalBody>
+            <Text>
+              Welcome to E-Commerce, where we provide a platform for purchasing products and services online. By using our website, you agree to comply with all applicable laws and regulations. We offer a range of products and services, and while we strive for accuracy, pricing and availability may change without notice. Payment is due at the time of purchase, and we accept various payment methods. Shipping and delivery times may vary, and we offer a return policy for eligible items. All content on our website is protected by intellectual property laws. We value your privacy and handle personal information according to our privacy policy.
+            </Text>
+          </ModalBody>
+          <ModalFooter>
+            <Button colorScheme="red" onClick={handleCancel} mr={3}>
+              Cancel
+            </Button>
+            <Button colorScheme="teal" onClick={handleConfirm}>
+              Confirm
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+
       <Navbar />
 
       <Flex direction="column" alignItems="center">
@@ -118,8 +150,7 @@ const Profile = () => {
           <ModalHeader>Terms and Conditions</ModalHeader>
           <ModalBody>
             <Text>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla convallis libero id sem rhoncus consequat. Vivamus id felis id leo convallis dictum ac vel felis. Mauris sit amet dapibus nulla. In hac habitasse platea dictumst. Nullam tristique
-              ligula eu mi eleifend, ac feugiat velit malesuada. Integer at magna id orci efficitur rutrum in at turpis.
+            Welcome to E-Commerce, where we provide a platform for purchasing products and services online. By using our website, you agree to comply with all applicable laws and regulations. We offer a range of products and services, and while we strive for accuracy, pricing and availability may change without notice. Payment is due at the time of purchase, and we accept various payment methods. Shipping and delivery times may vary, and we offer a return policy for eligible items. All content on our website is protected by intellectual property laws. We value your privacy and handle personal information according to our privacy policy.
             </Text>
           </ModalBody>
           <ModalFooter>

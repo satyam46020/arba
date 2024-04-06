@@ -6,18 +6,23 @@ import { Box, Button, Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody,
 import { useNavigate } from "react-router-dom";
 
 export const Homepage = () => {
-  const tcopen = JSON.parse(localStorage.getItem("isopen")) 
+  const tcopen = JSON.parse(localStorage.getItem("isopen"))
   console.log(tcopen)
   const [isOpen, setIsOpen] = useState(tcopen);
-const navigate = useNavigate();
+  const navigate = useNavigate();
 
-const handleConfirm = () => {
+  const handleConfirm = () => {
     setIsOpen(false);
-    localStorage.setItem("isopen",JSON.stringify(false));
-    
-};
+    localStorage.setItem("isopen", JSON.stringify(false));
 
-  const handleClick =()=> {
+  };
+  const handleCancel = () => {
+    setIsOpen(false);
+    localStorage.setItem("isopen", JSON.stringify(true));
+
+  }
+
+  const handleClick = () => {
     navigate('/product')
   }
   return (
@@ -28,12 +33,11 @@ const handleConfirm = () => {
           <ModalHeader>Terms and Conditions</ModalHeader>
           <ModalBody>
             <Text>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla convallis libero id sem rhoncus consequat. Vivamus id felis id leo convallis dictum ac vel felis. Mauris sit amet dapibus nulla. In hac habitasse platea dictumst. Nullam tristique
-              ligula eu mi eleifend, ac feugiat velit malesuada. Integer at magna id orci efficitur rutrum in at turpis.
+              Welcome to E-Commerce, where we provide a platform for purchasing products and services online. By using our website, you agree to comply with all applicable laws and regulations. We offer a range of products and services, and while we strive for accuracy, pricing and availability may change without notice. Payment is due at the time of purchase, and we accept various payment methods. Shipping and delivery times may vary, and we offer a return policy for eligible items. All content on our website is protected by intellectual property laws. We value your privacy and handle personal information according to our privacy policy.
             </Text>
           </ModalBody>
           <ModalFooter>
-            <Button colorScheme="red" mr={3}>
+            <Button colorScheme="red" onClick={handleCancel} mr={3}>
               Cancel
             </Button>
             <Button colorScheme="teal" onClick={handleConfirm}>

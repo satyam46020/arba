@@ -13,6 +13,7 @@ import {
   Center,
   Text,
   FormErrorMessage,
+  Spinner
 } from "@chakra-ui/react";
 
 const Register = () => {
@@ -27,9 +28,10 @@ const Register = () => {
   const [userNameError, setUserNameError] = useState("");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const isAuth = useSelector((store) => store.signupReducer.isAuth);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     let isValid = true;
 
@@ -62,6 +64,7 @@ const Register = () => {
     }
 
     if (isValid) {
+      setIsLoading(true);
       const formData={};
       formData.fullName= name;
       formData.userName=userName;
@@ -69,7 +72,8 @@ const Register = () => {
       formData.password=password;
       formData.avatar=avatar;
 
-      dispatch(signup(formData));
+      await dispatch(signup(formData));
+      setIsLoading(false);
     }
   };
 
@@ -81,19 +85,17 @@ const Register = () => {
 
   return (
     <Flex align="center" justify="center" h="100vh">
-      <Center>
+      <Center width={1200}>
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRuMCjTjLy6tF52cg1RjGzSEX8jdLSbbCjkyWyfU_tYIoqUd2Fv" alt="" width="30%" />
         <Box
           p={10}
           maxW="md"
-          borderWidth="1px"
-          borderRadius="lg"
           overflow="hidden"
         >
-          <Heading as="h2" size="lg" mb={4}>
+          <Heading as="h3" size="lg" mb={4}>
             Register
           </Heading>
           <form onSubmit={handleSubmit} encType="multipart/form-data">
-            {/* Name field */}
             <FormControl mb={4} isInvalid={!!nameError}>
               <FormLabel>
                 Name<span style={{ color: "red" }}>*</span>
@@ -107,7 +109,6 @@ const Register = () => {
               />
               <FormErrorMessage>{nameError}</FormErrorMessage>
             </FormControl>
-            {/* User Name field */}
             <FormControl mb={4} isInvalid={!!userNameError}>
               <FormLabel>
                 User Name<span style={{ color: "red" }}>*</span>
@@ -121,7 +122,6 @@ const Register = () => {
               />
               <FormErrorMessage>{userNameError}</FormErrorMessage>
             </FormControl>
-            {/* Email field */}
             <FormControl mb={4} isInvalid={!!emailError}>
               <FormLabel>
                 Email<span style={{ color: "red" }}>*</span>
@@ -135,7 +135,6 @@ const Register = () => {
               />
               <FormErrorMessage>{emailError}</FormErrorMessage>
             </FormControl>
-            {/* Password field */}
             <FormControl mb={6} isInvalid={!!passwordError}>
               <FormLabel>
                 Password<span style={{ color: "red" }}>*</span>
@@ -149,7 +148,6 @@ const Register = () => {
               />
               <FormErrorMessage>{passwordError}</FormErrorMessage>
             </FormControl>
-            {/* Avatar upload field */}
             <FormControl mb={6}>
               <FormLabel>Avatar</FormLabel>
               <Input
@@ -158,11 +156,10 @@ const Register = () => {
                 accept="image/*"
               />
             </FormControl>
-            <Button type="submit" colorScheme="teal" size="md" width="100%">
-              Sign Up
+            <Button type="submit" colorScheme="teal" size="md" width="100%" disabled={isLoading}>
+              {isLoading ? <Spinner size="sm" /> : 'Sign Up'}
             </Button>
           </form>
-          {/* Already have an account link */}
           <Flex justify="center" mt={4}>
             <Text>Already have an account? </Text>
             <Button
