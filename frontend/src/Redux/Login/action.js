@@ -75,20 +75,21 @@ export const updatePassword = (id,newPassword) => {
   };
 };
 
-export const updateProfile = (details) => {
-  console.log(details)
+export const updateProfile = (_id,fullName,userName,avatar) => {
+  // console.log(details)
   return async (dispatch) => {
     try {
       dispatch({ type: UPDATE_PROFILE_REQUEST });
       const res = await fetch(`https://arba-u5ed.onrender.com/profile`, {
         method: "PATCH",
         headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${localStorage.getItem('token')}`, // Include JWT token in the request headers
+          "Content-Type": "application/json"        
         },
-        body: JSON.stringify(details),
+        body: JSON.stringify({_id, fullName, userName, avatar}),
       });
       const data = await res.json();
+      localStorage.setItem('user', JSON.stringify(data));
+      
       if (res.ok) {
         // Handle success response if needed
         dispatch({ type: UPDATE_PROFILE_SUCCESS });

@@ -19,8 +19,7 @@ const Profile = () => {
   const [isTermsModalOpen, setIsTermsModalOpen] = useState(false);
 
   const handleUpdateProfile = () => {
-    const updatedUserData = { fullName:name, userName, avatar };
-    dispatch(updateProfile(updatedUserData)); 
+    dispatch(updateProfile(userData._id, name, userName, avatar)); 
     setIsUpdateModalOpen(false);
   };
 
