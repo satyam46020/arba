@@ -11,7 +11,6 @@ const Product = () => {
     dispatch(fetchProducts());
   }, [dispatch]);
 
-  // Retrieve cart data from localStorage on component mount
   useEffect(() => {
     const savedCart = localStorage.getItem('cart');
     if (savedCart) {
@@ -19,12 +18,12 @@ const Product = () => {
     }
   }, []);
 
-  const [cart, setCart] = useState({}); // State to keep track of items in cart
+  const [cart, setCart] = useState({});
 
   const handleAddToCart = (productId) => {
     setCart((prevCart) => ({
       ...prevCart,
-      [productId]: (prevCart[productId] || 0) + 1 // Increment item count in cart
+      [productId]: (prevCart[productId] || 0) + 1 
     }));
   };
 
@@ -32,13 +31,12 @@ const Product = () => {
     setCart((prevCart) => {
       const updatedCart = { ...prevCart };
       if (updatedCart[productId] > 0) {
-        updatedCart[productId] -= 1; // Decrement item count in cart
+        updatedCart[productId] -= 1; 
       }
       return updatedCart;
     });
   };
 
-  // Save cart data to localStorage whenever it changes
   useEffect(() => {
     localStorage.setItem('cart', JSON.stringify(cart));
   }, [cart]);
@@ -63,10 +61,10 @@ const Product = () => {
                 <Text fontSize="md" fontWeight="semibold" color="teal.600" mb={4}>
                   ₹{product.price}
                 </Text>
-                {cart[product.id] ? ( // Check if item is in cart
+                {cart[product.id] ? ( 
                   <Flex align="center">
                     <Button colorScheme="teal" size="sm" onClick={() => handleRemoveFromCart(product.id)}>-</Button>
-                    <Text mx={2}>{cart[product.id]}</Text> {/* Display item count */}
+                    <Text mx={2}>{cart[product.id]}</Text> 
                     <Button colorScheme="teal" size="sm" onClick={() => handleAddToCart(product.id)}>+</Button>
                   </Flex>
                 ) : (
