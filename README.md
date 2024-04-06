@@ -8,6 +8,11 @@ This E-commerce app provides a detailed overview of the FullStack E-Commerce App
 
 **Backend** https://arba-u5ed.onrender.com/
 
+## Demo Credential
+
+**Email** satyam46020@gmail.com
+**Password** 123
+
 ## Setup Instructions
 
 1. Clone the repository from GitHub.
