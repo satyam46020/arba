@@ -12,6 +12,7 @@ export const login = (details) => {
         body: JSON.stringify(details),
       });
       const data = await res.json();
+      console.log(data);
       if (res.ok) {
         localStorage.setItem('token', data.token);
         localStorage.setItem('user', JSON.stringify(data.user));
@@ -51,7 +52,7 @@ export const forgotPassword = (email) => {
   };
 };
 
-export const updatePassword = (newPassword) => {
+export const updatePassword = (id,newPassword) => {
   return async (dispatch) => {
     dispatch({ type: UPDATE_PASSWORD_REQUEST });
     try {
@@ -61,7 +62,7 @@ export const updatePassword = (newPassword) => {
           'Content-Type': 'application/json',
           "Authorization": `Bearer ${localStorage.getItem('token')}`
         },
-        body: JSON.stringify({ password: newPassword }),
+        body: JSON.stringify({ _id : id, password: newPassword }),
       });
       if (!response.ok) {
         throw new Error('Failed to update password');

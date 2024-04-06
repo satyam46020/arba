@@ -64,6 +64,7 @@ const CategoryTable = () => {
             Add Category
         </Button>
       </Flex>
+      <Box pl="18%">
       <Table variant="simple">
         <Thead>
           <Tr>
@@ -87,6 +88,7 @@ const CategoryTable = () => {
           ))}
         </Tbody>
       </Table>
+      </Box>
       <Box mt={4} display="flex" justifyContent="center">
         {Array.from({ length: Math.ceil(filteredCategories.length / categoriesPerPage) }, (_, i) => (
           <Button key={i} mx={1} colorScheme="blue" onClick={() => paginate(i + 1)}>{i + 1}</Button>

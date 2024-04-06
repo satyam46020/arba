@@ -64,7 +64,8 @@ const ProductTable = () => {
             Add Product
         </Button>
       </Flex>
-      <Table variant="simple">
+      <Box pl="15%">
+      <Table variant="simple" >
         <Thead>
           <Tr>
             <Th>Title</Th>
@@ -89,6 +90,7 @@ const ProductTable = () => {
           ))}
         </Tbody>
       </Table>
+      </Box>
       <Box mt={4} display="flex" justifyContent="center">
         {Array.from({ length: Math.ceil(filteredProducts.length / productsPerPage) }, (_, i) => (
           <Button key={i} mx={1} colorScheme="teal" onClick={() => paginate(i + 1)}>{i + 1}</Button>

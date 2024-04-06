@@ -100,7 +100,7 @@ export const deleteCategory = (categoryId) => {
     try {
       const token = localStorage.getItem('token');
 
-      const response = await fetch(`https://arba-u5ed.onrender.comcategory/${categoryId}`, {
+      const response = await fetch(`https://arba-u5ed.onrender.com/category/${categoryId}`, {
         method: 'DELETE',
         headers: {
           Authorization: `Bearer ${token}`,

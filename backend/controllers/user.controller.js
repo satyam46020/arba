@@ -99,18 +99,15 @@ const updatePassword = async (req, res) => {
 }
 
 const updateProfile = async (req, res) => {
-  const { fullName, password, avatar } = req.body;
+  const { fullName, userName, avatar } = req.body;
 
   try {
     let {userId} = req;
     let user = await User.findById(userId);
 
     if (fullName) user.fullName = fullName;
+    if (userName) user.userName = userName;
     if (avatar) user.avatar = avatar;
-    if (password) {
-      const hashedPassword = await bcrypt.hash(password, 10);
-      user.password = hashedPassword;
-    }
     res.status(200).json( user );
     await user.save();
   } catch (error) {

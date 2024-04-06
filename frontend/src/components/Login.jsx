@@ -20,6 +20,7 @@ import {
   ModalHeader,
   ModalBody,
   ModalFooter,
+  Spinner
 } from "@chakra-ui/react";
 
 const Login = () => {
@@ -33,6 +34,7 @@ const Login = () => {
   const [isForgotPasswordModalOpen, setIsForgotPasswordModalOpen] = useState(
     false
   );
+  const [isLoggingIn, setIsLoggingIn] = useState(false);
   const isAuth = useSelector((store) => store.loginReducer.isAuth);
 
   useEffect(() => {
@@ -42,7 +44,7 @@ const Login = () => {
     }
   }, [isAuth, navigate]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!email || !password) {
       setEmailError(!email);
@@ -50,7 +52,9 @@ const Login = () => {
       return;
     }
 
-    dispatch(login({ email, password }));
+    setIsLoggingIn(true);
+    await dispatch(login({ email, password }));
+    setIsLoggingIn(false);
     if (!isAuth) {
       setLoginError(true);
     }
@@ -65,7 +69,7 @@ const Login = () => {
   };
 
   return (
-    <Flex align="center" justify="center" h="100vh">
+    <Flex align="center" justify="center" h="100vh" >
       <Center>
         <Box
           p={10}
@@ -73,60 +77,65 @@ const Login = () => {
           borderWidth="1px"
           borderRadius="lg"
           overflow="hidden"
+          display="flex" // Make the box display flex
+          alignItems="center" // Align items vertically
         >
-          <Heading as="h2" size="lg" mb={4}>
-            Login
-          </Heading>
-          <form onSubmit={handleSubmit}>
-            <FormControl mb={4} isInvalid={emailError}>
-              <FormLabel>Email</FormLabel>
-              <Input
-                type="email"
-                value={email}
-                onChange={(e) => {
-                  setEmail(e.target.value);
-                  setEmailError(!e.target.value);
-                }}
-                placeholder="Enter your email"
-                size="md"
-              />
-            </FormControl>
-            <FormControl mb={6} isInvalid={passwordError}>
-              <FormLabel>Password</FormLabel>
-              <Input
-                type="password"
-                value={password}
-                onChange={(e) => {
-                  setPassword(e.target.value);
-                  setPasswordError(!e.target.value);
-                }}
-                placeholder="Enter your password"
-                size="md"
-              />
-            </FormControl>
-            <Button type="submit" colorScheme="teal" size="md" width="100%">
-              Log In
-            </Button>
-            <Button
-              colorScheme="blue"
-              variant="link"
-              size="sm"
-              mt={2}
-              onClick={handleOpenForgotPasswordModal}
-            >
-              Forgot Password?
-            </Button>
-          </form>
-          <Flex justify="center" mt={4}>
-            <Text>Don't have an account? </Text>
-            <Button as={Link} to="/register" variant="link" colorScheme="blue" ml={1}>
-              Register
-            </Button>
-          </Flex>
+        {/* <img src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcQOiNw4WnHjRuSC5vuLo56kKxpKxK05-da4dnhHvbTj4fy_qMQa" alt="Login Image" style={{ marginRight: "20px" , width : "50%" }} /> Render your image */}
+          <Box >
+            <Heading as="h2" size="lg" mb={4}>
+              Login
+            </Heading>
+            <form onSubmit={handleSubmit}>
+              <FormControl mb={4} isInvalid={emailError}>
+                <FormLabel>Email</FormLabel>
+                <Input
+                  type="email"
+                  value={email}
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                    setEmailError(!e.target.value);
+                  }}
+                  placeholder="Enter your email"
+                  size="md"
+                />
+              </FormControl>
+              <FormControl mb={6} isInvalid={passwordError}>
+                <FormLabel>Password</FormLabel>
+                <Input
+                  type="password"
+                  value={password}
+                  onChange={(e) => {
+                    setPassword(e.target.value);
+                    setPasswordError(!e.target.value);
+                  }}
+                  placeholder="Enter your password"
+                  size="md"
+                />
+              </FormControl>
+              <Button type="submit" colorScheme="teal" size="md" width="100%" disabled={isLoggingIn}>
+                {isLoggingIn ? <Spinner size="sm" /> : 'Log In'}
+              </Button>
+              <Button
+                colorScheme="blue"
+                variant="link"
+                size="sm"
+                mt={2}
+                onClick={handleOpenForgotPasswordModal}
+                disabled={isLoggingIn}
+              >
+                Forgot Password?
+              </Button>
+            </form>
+            <Flex justify="center" mt={4}>
+              <Text>Don't have an account? </Text>
+              <Button as={Link} to="/register" variant="link" colorScheme="blue" ml={1}>
+                Register
+              </Button>
+            </Flex>
+          </Box>
         </Box>
       </Center>
 
-      {/* Forgot Password Modal */}
       <Modal
         isOpen={isForgotPasswordModalOpen}
         onClose={handleCloseForgotPasswordModal}
@@ -135,7 +144,6 @@ const Login = () => {
         <ModalContent>
           <ModalHeader>Forgot Password</ModalHeader>
           <ModalBody>
-            {/* Implement your forgot password form here */}
             <FormControl mb={4}>
               <FormLabel>Email</FormLabel>
               <Input type="email" placeholder="Enter your email" />
