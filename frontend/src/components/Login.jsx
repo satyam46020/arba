@@ -54,7 +54,7 @@ const Login = () => {
     }
 
     setIsLoggingIn(true);
-    dispatch(login({ email, password }));
+    await dispatch(login({ email, password }));
     setIsLoggingIn(false);
     if (!isAuth) {
       setLoginError(true);
