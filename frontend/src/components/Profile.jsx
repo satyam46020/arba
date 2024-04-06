@@ -11,16 +11,15 @@ const Profile = () => {
 
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [userName, setUserName] = useState(userData.userName);
-  const [email, setEmail] = useState(userData.email);
-  const [password, setPassword] = useState('');
-
+  const [name, setName] = useState(userData.fullName)
+  const [avatar, setAvatar] = useState(null);
   const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
   const [newPassword, setNewPassword] = useState('');
 
   const [isTermsModalOpen, setIsTermsModalOpen] = useState(false);
 
   const handleUpdateProfile = () => {
-    const updatedUserData = { ...userData, userName, email };
+    const updatedUserData = { fullName:name, userName, avatar };
     dispatch(updateProfile(updatedUserData)); 
     setIsUpdateModalOpen(false);
   };
@@ -73,12 +72,16 @@ const Profile = () => {
           <ModalHeader>Update Profile</ModalHeader>
           <ModalBody>
             <FormControl mb={4}>
+              <FormLabel>FullName</FormLabel>
+              <Input type="name" value={name} onChange={(e) => setName(e.target.value)} />
+            </FormControl>
+            <FormControl mb={4}>
               <FormLabel>UserName</FormLabel>
               <Input type="text" value={userName} onChange={(e) => setUserName(e.target.value)} />
             </FormControl>
-            <FormControl mb={4}>
-              <FormLabel>Email</FormLabel>
-              <Input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+            <FormControl mb={6}>
+              <FormLabel>Avatar</FormLabel>
+              <Input type="file" onChange={(e) => setAvatar(e.target.files[0])} accept="image/*" />
             </FormControl>
           </ModalBody>
           <ModalFooter>

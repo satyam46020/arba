@@ -11,6 +11,6 @@ router.post('/forgot-password', userController.emailVerification);
 
 router.patch('/forgot-password', userController.updatePassword)
 
-router.patch('/profile',auth, userController.updateProfile);
+router.patch('/profile', userController.updateProfile);
 
 module.exports = router;

@@ -76,6 +76,7 @@ export const updatePassword = (id,newPassword) => {
 };
 
 export const updateProfile = (details) => {
+  console.log(details)
   return async (dispatch) => {
     try {
       dispatch({ type: UPDATE_PROFILE_REQUEST });

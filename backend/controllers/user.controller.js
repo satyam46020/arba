@@ -30,7 +30,7 @@ const storage = multer.diskStorage({
         }
   
         const { fullName, userName, email, password } = req.body;
-        const avatar = req.file ? req.file.filename : ''; // Filename of uploaded avatar image
+        const avatar = req.file ? req.file.filename : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRnM9TbrVSGfC0DYb…https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRnM9TbrVSGfC0DYbUhLJcyJakjKGBDVsJqEw&s'; // Filename of uploaded avatar image
   
         const hashedPassword = await bcrypt.hash(password, 10);
   
@@ -45,8 +45,8 @@ const storage = multer.diskStorage({
         res.json({ message: "SignUp successful", user: newUser });
       });
     } catch (error) {
-      console.error(error);
-      res.status(500).send(error);
+      console.log("error");
+      res.status(500).send("error");
     }
   };
 
@@ -99,11 +99,10 @@ const updatePassword = async (req, res) => {
 }
 
 const updateProfile = async (req, res) => {
-  const { fullName, userName, avatar } = req.body;
+  const { _id, fullName, userName, avatar } = req.body;
 
   try {
-    let {userId} = req;
-    let user = await User.findById(userId);
+    let user = await User.findById(_id);
 
     if (fullName) user.fullName = fullName;
     if (userName) user.userName = userName;
