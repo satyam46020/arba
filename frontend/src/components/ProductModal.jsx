@@ -1,14 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, FormControl, FormLabel, Input, Button } from '@chakra-ui/react';
+import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, FormControl, FormLabel, Input, Button, Select } from '@chakra-ui/react';
 import { useDispatch } from 'react-redux';
 import { createProduct, updateProduct } from '../Redux/Product/action';
 
 const ProductModal = ({ isOpen, onClose, productToEdit }) => {
   const dispatch = useDispatch();
-
   const [formData, setFormData] = useState({ title: '', description: '', price: '', category: '', image: '' });
+  const [categoryNames, setCategoryNames] = useState([]);
 
   useEffect(() => {
+    // Fetch category names from local storage
+    const storedCategoryNames = JSON.parse(localStorage.getItem('categoryNames')) || [];
+    setCategoryNames(storedCategoryNames);
+
     if (productToEdit) {
       setFormData({
         title: productToEdit.title,
@@ -56,7 +60,12 @@ const ProductModal = ({ isOpen, onClose, productToEdit }) => {
           </FormControl>
           <FormControl mb={4}>
             <FormLabel>Category</FormLabel>
-            <Input type="text" name="category" value={formData.category} onChange={handleChange} />
+            <Select name="category" value={formData.category} onChange={handleChange}>
+              <option>Select Category</option>
+              {categoryNames.map((category, index) => (
+                <option key={formData._id} value={category}>{category}</option>
+              ))}
+            </Select>
           </FormControl>
           <FormControl mb={4}>
             <FormLabel>Image URL</FormLabel>

@@ -7,8 +7,6 @@ import CategoryModal from './CategoryModal';
 const CategoryTable = () => {
   const dispatch = useDispatch();
   const categories = useSelector((state) => state.categoryReducer.categories);
-  const [currentPage, setCurrentPage] = useState(1);
-  const categoriesPerPage = 5;
   const [isAddEditModalOpen, setIsAddEditModalOpen] = useState(false);
   const [categoryToEdit, setCategoryToEdit] = useState(null);
   const [filterValue, setFilterValue] = useState('');
@@ -17,12 +15,11 @@ const CategoryTable = () => {
     dispatch(fetchCategories());
   }, [dispatch]);
 
-  const indexOfLastCategory = currentPage * categoriesPerPage;
-  const indexOfFirstCategory = indexOfLastCategory - categoriesPerPage;
-  const filteredCategories = categories.filter(category =>
-    category.name.toLowerCase().includes(filterValue.toLowerCase())
-  );
-  const currentCategories = filteredCategories.slice(indexOfFirstCategory, indexOfLastCategory);
+  useEffect(() => {
+    // Set category names in local storage
+    const categoryNames = categories.map(category => category.name);
+    localStorage.setItem('categoryNames', JSON.stringify(categoryNames));
+  }, [categories]);
 
   const handleAddCategory = () => {
     setIsAddEditModalOpen(true);
@@ -53,8 +50,6 @@ const CategoryTable = () => {
     dispatch(fetchCategories());
   };
 
-  const paginate = (pageNumber) => setCurrentPage(pageNumber);
-
   return (
     <>
       <Flex mb={4} justifyContent={'space-around'}>
@@ -75,7 +70,9 @@ const CategoryTable = () => {
           </Tr>
         </Thead>
         <Tbody>
-          {currentCategories.map((category) => (
+          {categories.filter(category =>
+            category.name.toLowerCase().includes(filterValue.toLowerCase())
+          ).map((category) => (
             <Tr key={category._id}>
               <Td>{category.name}</Td>
               <Td>{category.slug}</Td>
@@ -88,11 +85,6 @@ const CategoryTable = () => {
           ))}
         </Tbody>
       </Table>
-      </Box>
-      <Box mt={4} display="flex" justifyContent="center">
-        {Array.from({ length: Math.ceil(filteredCategories.length / categoriesPerPage) }, (_, i) => (
-          <Button key={i} mx={1} colorScheme="blue" onClick={() => paginate(i + 1)}>{i + 1}</Button>
-        ))}
       </Box>
       <CategoryModal isOpen={isAddEditModalOpen} onClose={handleCloseModal} categoryToEdit={categoryToEdit} />
     </>

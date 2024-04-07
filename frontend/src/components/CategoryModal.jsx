@@ -1,15 +1,25 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, Button, FormControl, FormLabel, Input } from '@chakra-ui/react';
 import { createCategory, updateCategory } from '../Redux/Category/action';
 
 const CategoryModal = ({ isOpen, onClose, categoryToEdit }) => {
   const dispatch = useDispatch();
-  const [formData, setFormData] = useState({
-    name: categoryToEdit ? categoryToEdit.name : '',
-    slug: categoryToEdit ? categoryToEdit.slug : '',
-    image: categoryToEdit ? categoryToEdit.image : ''
-  });
+  
+  const [formData, setFormData] = useState({ name: '', slug: '', image: '' });
+
+  useEffect(() => {
+    if (categoryToEdit) {
+      setFormData({
+        name: categoryToEdit.name ,
+        slug: categoryToEdit.slug,
+        image: categoryToEdit.image
+      });
+    }
+    else{
+      setFormData({ name: '', slug: '', image: '' });
+    }
+  },[categoryToEdit]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
