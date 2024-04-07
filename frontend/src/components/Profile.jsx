@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState, useSyncExternalStore } from 'react';
 import { Button, Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalFooter, FormControl, FormLabel, Input, Box, Image, Text, Flex } from '@chakra-ui/react';
 import { useDispatch } from 'react-redux';
 import { updatePassword, updateProfile } from '../Redux/Login/action';
@@ -10,18 +10,30 @@ const Profile = () => {
   const userData = JSON.parse(localStorage.getItem('user'));
 
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
-  const [userName, setUserName] = useState(userData.userName);
+  const [_id, set_Id] = useState(userData._id);
   const [name, setName] = useState(userData.fullName)
-  const [avatar, setAvatar] = useState(null);
+  const [userName, setUserName] = useState(userData.userName);
+  const [email, setEmail] =useState(userData.email)
+  const [avatar, setAvatar] = useState(userData.avatar);
   const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
   const [newPassword, setNewPassword] = useState('');
   const [isTermsModalOpen, setIsTermsModalOpen] = useState(false);
   
-  const tcopen = JSON.parse(localStorage.getItem("isopen"))
+  var tcopen = JSON.parse(localStorage.getItem("isopen"))
   const [isOpen, setIsOpen] = useState(tcopen);
-  
-  const handleUpdateProfile = () => {
+  useEffect(()=>{
     dispatch(updateProfile(userData._id, name, userName, avatar)); 
+    const updatedUser = {
+      _id,
+      fullName,
+      userName,
+      email,
+      avatar
+    }
+    localStorage.setItem('user', JSON.stringify(updatedUser));
+  },[name])
+
+  const handleUpdateProfile = () => {
     setIsUpdateModalOpen(false);
   };
 
@@ -106,7 +118,7 @@ const Profile = () => {
           <ModalHeader>Update Profile</ModalHeader>
           <ModalBody>
             <FormControl mb={4}>
-              <FormLabel>FullName</FormLabel>
+              <FormLabel>Full Name</FormLabel>
               <Input type="name" value={name} onChange={(e) => setName(e.target.value)} />
             </FormControl>
             <FormControl mb={4}>
