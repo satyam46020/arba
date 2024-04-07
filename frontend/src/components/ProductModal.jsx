@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, FormControl, FormLabel, Input, Button, Select } from '@chakra-ui/react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { createProduct, updateProduct } from '../Redux/Product/action';
+import { fetchCategories } from '../Redux/Category/action';
 
 const ProductModal = ({ isOpen, onClose, productToEdit }) => {
   const dispatch = useDispatch();
+  const categories = useSelector((state) => state.categoryReducer.categories);
+  
   const [formData, setFormData] = useState({ title: '', description: '', price: '', category: '', image: '' });
-  const [categoryNames, setCategoryNames] = useState([]);
 
   useEffect(() => {
-    // Fetch category names from local storage
-    const storedCategoryNames = JSON.parse(localStorage.getItem('categoryNames')) || [];
-    setCategoryNames(storedCategoryNames);
+    dispatch(fetchCategories());
 
     if (productToEdit) {
       setFormData({
@@ -39,6 +39,7 @@ const ProductModal = ({ isOpen, onClose, productToEdit }) => {
     onClose();
   };
 
+  console.log(categories)
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
@@ -62,8 +63,8 @@ const ProductModal = ({ isOpen, onClose, productToEdit }) => {
             <FormLabel>Category</FormLabel>
             <Select name="category" value={formData.category} onChange={handleChange}>
               <option>Select Category</option>
-              {categoryNames.map((category, index) => (
-                <option key={formData._id} value={category}>{category}</option>
+              {categories.map((category) => (
+                <option key={category._id} value={category.name}>{category.name}</option>
               ))}
             </Select>
           </FormControl>

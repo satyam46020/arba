@@ -16,7 +16,6 @@ const CategoryTable = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    // Set category names in local storage
     const categoryNames = categories.map(category => category.name);
     localStorage.setItem('categoryNames', JSON.stringify(categoryNames));
   }, [categories]);
@@ -49,7 +48,9 @@ const CategoryTable = () => {
   const handleRefresh = () => {
     dispatch(fetchCategories());
   };
+  console.log(categories)
 
+  
   return (
     <>
       <Flex mb={4} justifyContent={'space-around'}>
