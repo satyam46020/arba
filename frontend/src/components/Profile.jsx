@@ -6,11 +6,11 @@ import Navbar from './Navbar';
 
 const Profile = () => {
   const dispatch = useDispatch();
-
   const userData = JSON.parse(localStorage.getItem('user'));
-
+  
+  
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
-  const [_id, set_Id] = useState(userData._id);
+  const [id, setId] = useState(userData._id);
   const [name, setName] = useState(userData.fullName)
   const [userName, setUserName] = useState(userData.userName);
   const [email, setEmail] =useState(userData.email)
@@ -22,16 +22,17 @@ const Profile = () => {
   var tcopen = JSON.parse(localStorage.getItem("isopen"))
   const [isOpen, setIsOpen] = useState(tcopen);
   useEffect(()=>{
+    const userData = JSON.parse(localStorage.getItem('user'));
     dispatch(updateProfile(userData._id, name, userName, avatar)); 
     const updatedUser = {
-      _id,
+      ...userData,
+      _id:id,
       fullName:name,
       userName,
-      email,
-      avatar
+      email
     }
     localStorage.setItem('user', JSON.stringify(updatedUser));
-  },[name])
+  },[name,userName,avatar])
 
   const handleUpdateProfile = () => {
     setIsUpdateModalOpen(false);
@@ -127,7 +128,7 @@ const Profile = () => {
             </FormControl>
             <FormControl mb={6}>
               <FormLabel>Avatar</FormLabel>
-              <Input type="file" onChange={(e) => setAvatar(e.target.files[0])} accept="image/*" />
+              <Input type="file" onChange={(e) => setAvatar(e.target.files[0])} />
             </FormControl>
           </ModalBody>
           <ModalFooter>

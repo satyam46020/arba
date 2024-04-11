@@ -113,16 +113,39 @@ const updatePassword = async (req, res) => {
 }
 
 const updateProfile = async (req, res) => {
-  const { _id, fullName, userName, avatar } = req.body;
-
   try {
-    let user = await User.findById(_id);
+    upload(req, res, async function (err) {
+      if (err instanceof multer.MulterError) {
+        console.error('Error uploading file:', err);
+        return res.status(500).json({ msg: 'Error uploading file' });
+      } else if (err) {
+        console.error('Unexpected error:', err);
+        return res.status(500).json({ msg: 'Unexpected error' });
+      }
+      const { _id, fullName, userName, avatar } = req.body;
 
-    if (fullName) user.fullName = fullName;
-    if (userName) user.userName = userName;
-    if (avatar) user.avatar = avatar;
-    res.status(200).json( user );
-    await user.save();
+      let user = await User.findById(_id);
+
+      if (fullName) user.fullName = fullName;
+      if (userName) user.userName = userName;
+      if (req.file) {
+        try {
+          const result = await new Promise((resolve, reject) => {
+            cloudinary.uploader.upload_stream({ public_id: "profile-avatar" }, (err, result) => {
+              if (err) reject(err);
+              else resolve(result.url);
+            }).end(req.file.buffer);
+          });
+    
+          user.avatar = result; 
+        } catch (error) {
+          console.error('Error uploading file to Cloudinary:', error);
+          return res.status(500).json({ msg: 'Error uploading file to Cloudinary' });
+        }
+      }
+      res.status(200).json( user );
+      await user.save();
+    })
   } catch (error) {
     console.error(error.message);
     res.status(500).send(error);

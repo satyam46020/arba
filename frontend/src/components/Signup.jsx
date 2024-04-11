@@ -67,12 +67,12 @@ const Register = () => {
       setIsLoading(true);
       const payload=new FormData();
       payload.append('fullName', name);
-      payload.append('userNam',userName);
+      payload.append('userName',userName);
       payload.append('email',email);
       payload.append('password',password);
       payload.append('avatar',avatar);
 
-      console.log(payload)
+      console.log(payload.get('avatar'))
       await dispatch(signup(payload));
       setIsLoading(false);
     }

@@ -18,7 +18,7 @@ export const login = (details) => {
         localStorage.setItem('user', JSON.stringify(data.user));
         dispatch({ type: LOGIN_SUCCESS, payload: { token: data.token, name: data.user } });
       } else {
-        throw new Error(data.msg || 'Login failed');
+        throw new Error('Login failed');
       }
     } catch (error) {
       console.error(error);
@@ -83,22 +83,22 @@ export const updatePassword = (id,newPassword) => {
 };
 
 export const updateProfile = (_id,fullName,userName,avatar) => {
-  // console.log(details)
   return async (dispatch) => {
+    const payload=new FormData();
+      payload.append('_id', _id);
+      payload.append('fullName', fullName);
+      payload.append('userName',userName);
+      payload.append('avatar',avatar);
     try {
       dispatch({ type: UPDATE_PROFILE_REQUEST });
       const res = await fetch(`http://localhost:5000/profile`, {
         method: "PATCH",
-        headers: {
-          "Content-Type": "application/json"        
-        },
-        body: JSON.stringify({_id, fullName, userName, avatar}),
+        body: payload
       });
       const data = await res.json();
       localStorage.setItem('user', JSON.stringify(data));
       
       if (res.ok) {
-        // Handle success response if needed
         dispatch({ type: UPDATE_PROFILE_SUCCESS });
       } else {
         throw new Error(data.msg || 'Update failed');
