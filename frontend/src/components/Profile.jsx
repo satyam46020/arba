@@ -22,7 +22,6 @@ const Profile = () => {
   var tcopen = JSON.parse(localStorage.getItem("isopen"))
   const [isOpen, setIsOpen] = useState(tcopen);
   useEffect(()=>{
-    const userData = JSON.parse(localStorage.getItem('user'));
     dispatch(updateProfile(userData._id, name, userName, avatar)); 
     const updatedUser = {
       ...userData,
