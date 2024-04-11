@@ -6,7 +6,7 @@ This E-commerce app provides a detailed overview of the FullStack E-Commerce App
 
 **Frontend** https://arba-chi.vercel.app//
 
-**Backend** https://arba-u5ed.onrender.com/
+**Backend** http://localhost:5000/
 
 ## Demo Credential
 

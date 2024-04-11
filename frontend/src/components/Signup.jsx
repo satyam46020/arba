@@ -65,14 +65,15 @@ const Register = () => {
 
     if (isValid) {
       setIsLoading(true);
-      const formData={};
-      formData.fullName= name;
-      formData.userName=userName;
-      formData.email=email;
-      formData.password=password;
-      formData.avatar=avatar;
+      const payload=new FormData();
+      payload.append('fullName', name);
+      payload.append('userNam',userName);
+      payload.append('email',email);
+      payload.append('password',password);
+      payload.append('avatar',avatar);
 
-      await dispatch(signup(formData));
+      console.log(payload)
+      await dispatch(signup(payload));
       setIsLoading(false);
     }
   };
@@ -95,7 +96,7 @@ const Register = () => {
           <Heading as="h3" size="lg" mb={4}>
             Register
           </Heading>
-          <form onSubmit={handleSubmit} encType="multipart/form-data">
+          <form onSubmit={handleSubmit}>
             <FormControl mb={4} isInvalid={!!nameError}>
               <FormLabel>
                 Name<span style={{ color: "red" }}>*</span>
@@ -153,7 +154,8 @@ const Register = () => {
               <Input
                 type="file"
                 onChange={(e) => setAvatar(e.target.files[0])}
-                accept="image/*"
+                
+                name="avatar"  
               />
             </FormControl>
             <Button type="submit" colorScheme="teal" size="md" width="100%" disabled={isLoading}>

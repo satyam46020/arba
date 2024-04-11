@@ -40,13 +40,23 @@ const getAllProducts = async (req, res) => {
       sort.price = 1;
     }
 
+    // Check if user is logged in
+    if (req.userId) {
+      // Add user ID condition to query
+      query.owner = req.userId;
+    } else {
+      // If user is not logged in, return unauthorized status
+      return res.status(401).json({ msg: 'Unauthorized' });
+    }
+
     const products = await Product.find(query).sort(sort);
     res.status(200).json(products);
   } catch (error) {
     console.error(error.message);
-    res.status(500).send(error.messsage);
+    res.status(500).send(error.message);
   }
 };
+
 
 // Get Product by ID
 const getProductById = async (req, res) => {

@@ -3,52 +3,66 @@ const bcrypt = require('bcrypt');
 const multer = require('multer')
 const path = require('path')
 const jwt = require('jsonwebtoken')
+const fs = require('fs')
+const cloudinary = require('cloudinary').v2
+  
+cloudinary.config({
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.API_KEY,
+  api_secret: process.env.API_SECRET
+});
 
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-      cb(null, 'uploads/avatars'); 
-    },
-    filename: function (req, file, cb) {
-      cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
-    }
-  });
-  
-  const upload = multer({ 
-    storage: storage,
-    limits: { fileSize: 1024 * 1024 * 5 } 
-  }).single('avatar');
-  console.log(storage)
-  
-  const createUser = async (req, res) => {
-    try {
-      // Upload avatar photo
-      upload(req, res, async function(err) {
-        if (err instanceof multer.MulterError) {
-          return res.status(500).json({ msg: 'Error uploading file' });
-        } else if (err) {
-          return res.status(500).json({ msg: err.message });
+const storage=multer.memoryStorage();
+const upload = multer(({storage})).single('avatar');
+
+const createUser = async (req, res) => {
+  try {
+    upload(req, res, async function (err) {
+      if (err instanceof multer.MulterError) {
+        console.error('Error uploading file:', err);
+        return res.status(500).json({ msg: 'Error uploading file' });
+      } else if (err) {
+        console.error('Unexpected error:', err);
+        return res.status(500).json({ msg: 'Unexpected error' });
+      }
+    
+      const { fullName, userName, email, password } = req.body;
+      let avatarUrl = 'default_avatar_url.jpg'; 
+
+      if (req.file) {
+        try {
+          const result = await new Promise((resolve, reject) => {
+            cloudinary.uploader.upload_stream({ public_id: "profile-avatar" }, (err, result) => {
+              if (err) reject(err);
+              else resolve(result.url);
+            }).end(req.file.buffer);
+          });
+    
+          avatarUrl = result; 
+        } catch (error) {
+          console.error('Error uploading file to Cloudinary:', error);
+          return res.status(500).json({ msg: 'Error uploading file to Cloudinary' });
         }
-  
-        const { fullName, userName, email, password } = req.body;
-        const avatar = req.file ? req.file.filename : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRnM9TbrVSGfC0DYb…https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRnM9TbrVSGfC0DYbUhLJcyJakjKGBDVsJqEw&s'; // Filename of uploaded avatar image
-  
-        const hashedPassword = await bcrypt.hash(password, 10);
-  
-        const newUser = await User.create({
-          fullName,
-          userName,
-          email,
-          password: hashedPassword,
-          avatar
-        });
-  
-        res.json({ message: "SignUp successful", user: newUser });
+      }
+    
+      const hashedPassword = await bcrypt.hash(password, 10);
+    
+      const newUser = await User.create({
+        fullName,
+        userName,
+        email,
+        password: hashedPassword,
+        avatar: avatarUrl 
       });
-    } catch (error) {
-      console.log("error");
-      res.status(500).send("error");
-    }
-  };
+    
+      res.json({ message: "SignUp successful", user: newUser });
+    });
+  } catch (error) {
+    console.error('Server error:', error);
+    res.status(500).send("Server Error");
+  }
+};
+
 
 const login = async (req, res) => {
   const { email, password } = req.body;

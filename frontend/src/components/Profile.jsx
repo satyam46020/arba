@@ -25,7 +25,7 @@ const Profile = () => {
     dispatch(updateProfile(userData._id, name, userName, avatar)); 
     const updatedUser = {
       _id,
-      fullName,
+      fullName:name,
       userName,
       email,
       avatar

@@ -38,7 +38,14 @@ const updateCategory = async (req, res) => {
 // Get all Categories
 const getAllCategories = async (req, res) => {
   try {
-    const categories = await Category.find();
+    // Check if user is logged in
+    if (!req.userId) {
+      // If user is not logged in, return unauthorized status
+      return res.status(401).json({ msg: 'Unauthorized' });
+    }
+
+    // Add user ID condition to query
+    const categories = await Category.find({ owner: req.userId });
     res.status(200).json(categories);
   } catch (error) {
     console.error(error.message);

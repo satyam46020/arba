@@ -20,7 +20,7 @@ export const fetchCategories = () => {
     try {
       const token = localStorage.getItem('token');
 
-      const response = await fetch('https://arba-u5ed.onrender.com/category', {
+      const response = await fetch('http://localhost:5000/category', {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -45,7 +45,7 @@ export const createCategory = (categoryData) => {
     try {
       const token = localStorage.getItem('token');
 
-      const response = await fetch('https://arba-u5ed.onrender.com/category', {
+      const response = await fetch('http://localhost:5000/category', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -72,7 +72,7 @@ export const updateCategory = (categoryId, categoryData) => {
     try {
       const token = localStorage.getItem('token');
 
-      const response = await fetch(`https://arba-u5ed.onrender.com/category/${categoryId}`, {
+      const response = await fetch(`http://localhost:5000/category/${categoryId}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
@@ -100,7 +100,7 @@ export const deleteCategory = (categoryId) => {
     try {
       const token = localStorage.getItem('token');
 
-      const response = await fetch(`https://arba-u5ed.onrender.com/category/${categoryId}`, {
+      const response = await fetch(`http://localhost:5000/category/${categoryId}`, {
         method: 'DELETE',
         headers: {
           Authorization: `Bearer ${token}`,
