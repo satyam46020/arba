@@ -56,7 +56,7 @@ export const Homepage = () => {
       <Box>
         <Product />
       </Box>
-      <Button colorScheme="teal" onClick={handleClick}>All Products</Button>
+      <Button textAlign={"right"} colorScheme="teal" onClick={handleClick}>All Products</Button>
     </>
   );
 };
