@@ -27,7 +27,7 @@ const updateCartItem = async (req, res) => {
       const { id } = req.params;
       const { quantity } = req.body;
   
-      if (quantity === 0) {
+      if (quantity === 1) {
         const deletedCartItem = await Cart.findByIdAndDelete(id);
         if (!deletedCartItem) {
           return res.status(404).json({ message: 'Cart item not found' });
@@ -35,7 +35,7 @@ const updateCartItem = async (req, res) => {
         return res.json({ message: 'Cart item deleted successfully' });
       }
   
-      const updatedCartItem = await Cart.findByIdAndUpdate(id, { quantity }, { new: true });
+      const updatedCartItem = await Cart.findByIdAndUpdate(id, { quantity: quantity-1}, { new: true });
       res.json(updatedCartItem);
     } catch (error) {
       res.status(400).json({ message: error.message });

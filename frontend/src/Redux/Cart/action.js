@@ -28,7 +28,6 @@ export const fetchCart = () => {
       }
 
       const data = await response.json();
-      // console.log(data)
       dispatch({ type: FETCH_CART_SUCCESS, payload: data });
     } catch (error) {
       dispatch({ type: FETCH_CART_FAILURE, payload: error.message });
@@ -57,7 +56,6 @@ export const addToCart = (productId) => {
       }
 
       const data = await response.json();
-      console.log(data)
       dispatch({ type: ADD_TO_CART_SUCCESS, payload: data });
     } catch (error) {
       dispatch({ type: ADD_TO_CART_FAILURE, payload: error.message });
@@ -67,7 +65,7 @@ export const addToCart = (productId) => {
 
 // Update cart item quantity
 export const updateCart = (itemId, quantity) => {
-  console.log(itemId)
+  console.log(quantity)
   return async (dispatch) => {
     dispatch({ type: UPDATE_CART_REQUEST });
     try {

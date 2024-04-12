@@ -4,16 +4,16 @@ export const signup = (details) => {
   return async (dispatch) => {
     try {
       dispatch({ type: SIGNUP_REQUEST });
-      console.log(details.get('avatar'));
+      // console.log(details.get('avatar'));
       const res=await fetch('https://arba-u5ed.onrender.com/register', {
         method: 'POST',
         body: details,
       });
-      console.log(await res)
+      // console.log(await res)
       dispatch({ type: SIGNUP_SUCCESS });
     } catch (error) {
       dispatch({ type: SIGNUP_FAILURE });
-      console.log(error)
+      // console.log(error)
     }
   }; 
 };

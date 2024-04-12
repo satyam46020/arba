@@ -48,7 +48,7 @@ const CategoryTable = () => {
   const handleRefresh = () => {
     dispatch(fetchCategories());
   };
-  console.log(categories)
+  // console.log(categories)
 
   
   return (

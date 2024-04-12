@@ -6,48 +6,24 @@ import { addToCart, fetchCart, updateCart } from '../Redux/Cart/action';
 
 const Product = () => {
   const dispatch = useDispatch();
+
   const products = useSelector((state) => state.productReducer.products);
   const carts = useSelector((state)=> state.cartReducer.cartItems)
+
   const user = JSON.parse(localStorage.getItem("user"));
+
   useEffect(() => {
     dispatch(fetchProducts());
     dispatch(fetchCart())
-  }, [dispatch]);
-  
-  useEffect(() => {
-    const savedCart = localStorage.getItem('cart');
-    if (savedCart) {
-      setCart(JSON.parse(savedCart));
-    }
-  }, []);
-  
-  const [cart, setCart] = useState({});
-  // console.log(cart)
+  }, [dispatch,carts]);
+
   const handleAddToCart = (productId) => {
     dispatch(addToCart(productId));
-    setCart((prevCart) => ({
-      ...prevCart,
-      [productId]: (prevCart[productId] || 0) + 1 
-    }));
-    console.log(cart)
   };
   
-  const handleRemoveFromCart = (productId) => {
-    setCart((prevCart) => {
-      const updatedCart = { ...prevCart };
-      if (updatedCart[productId] > 0) {
-        updatedCart[productId] -= 1; 
-        const existingCartItem = carts.find(item => item.productId === productId);
-          dispatch(updateCart(existingCartItem._id, updatedCart[productId]));
-          console.log(cart)
-      }
-      return updatedCart;
-    });
+  const handleRemoveFromCart = (cart) => {
+    dispatch(updateCart(cart._id, cart.quantity));
   };
-
-  // useEffect(() => {
-  //   localStorage.setItem('cart', JSON.stringify(cart));
-  // }, [cart]);
 
   return (
     <>
@@ -70,10 +46,10 @@ const Product = () => {
                   ₹{product.price}
                 </Text>
                 {carts.map((cartItem) => {
-                  if (cartItem.productId === product._id && cartItem.owner === user._id ) {
+                  if (cartItem.productId === product._id && cartItem.owner === user._id && cartItem.quantity>0) {
                     return (
                       <Flex key={cartItem._id} align="center">
-                        <Button colorScheme="teal" size="sm" onClick={() => handleRemoveFromCart(product._id)}>-</Button>
+                        <Button colorScheme="teal" size="sm" onClick={() => handleRemoveFromCart(cartItem)}>-</Button>
                         <Text mx={2}>{cartItem.quantity}</Text> 
                         <Button colorScheme="teal" size="sm" onClick={() => handleAddToCart(product._id)}>+</Button>
                       </Flex>
@@ -81,7 +57,6 @@ const Product = () => {
                   }
                 })}
 
-                {/* If no cart item found with matching productId, render "Add to Cart" button */}
                 {!carts.some(cartItem => cartItem.productId === product._id) && (
                   <Button colorScheme="teal" size="sm" onClick={() => handleAddToCart(product._id)}>Add to Cart</Button>
                 )}

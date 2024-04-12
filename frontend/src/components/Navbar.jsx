@@ -11,25 +11,22 @@ const Navbar = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
+    const savedCart = localStorage.getItem('cart');
+
     const [cart, setCart] = useState({}); 
 
     useEffect(() => {
-        const savedCart = localStorage.getItem('cart');
-        console.log("cart item"+savedCart)
-        setCart(savedCart)
         if (savedCart) {
             const cartData = JSON.parse(savedCart);
             setCart(cartData);
         }
-    }, []);
+    }, [savedCart]);
 
     const handleLogout = () => {
         dispatch(logout());
         localStorage.setItem("isopen", JSON.stringify(false));
         navigate('/');
     };
-
-    const totalCartItems = Object.values(cart).reduce((total, count) => total + count, 0);
 
     return (
         <Box>
@@ -40,9 +37,9 @@ const Navbar = () => {
                 <Spacer />
                 <Button as={Link} to="/cart" variant="ghost" colorScheme="teal" mr={4}>
                     <FiShoppingCart size={24} />
-                    {totalCartItems > 0 && (
+                    {savedCart > 0 && (
                         <Badge colorScheme="teal" fontSize="xs" ml="1" position="absolute" top="-4px" right="-4px">
-                            {totalCartItems}
+                            {savedCart}
                         </Badge>
                     )}
                 </Button>

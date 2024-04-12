@@ -18,7 +18,6 @@ const initialState = {
 
 const cartReducer = (state = initialState, action) => {
   localStorage.setItem('cart', JSON.stringify(state.cartItems.length));
-  // console.log(state)
   switch (action.type) {
     case FETCH_CART_REQUEST:
       case ADD_TO_CART_REQUEST:

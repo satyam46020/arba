@@ -39,7 +39,7 @@ const ProductModal = ({ isOpen, onClose, productToEdit }) => {
     onClose();
   };
 
-  console.log(categories)
+  // console.log(categories)
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />

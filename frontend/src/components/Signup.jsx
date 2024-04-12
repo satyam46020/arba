@@ -72,7 +72,7 @@ const Register = () => {
       payload.append('password',password);
       payload.append('avatar',avatar);
 
-      console.log(payload.get('avatar'))
+      // console.log(payload.get('avatar'))
       await dispatch(signup(payload));
       setIsLoading(false);
     }

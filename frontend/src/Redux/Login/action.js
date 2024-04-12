@@ -12,7 +12,7 @@ export const login = (details) => {
         body: JSON.stringify(details),
       });
       const data = await res.json();
-      console.log(data);
+      // console.log(data);
       if (res.ok) {
         localStorage.setItem('token', data.token);
         localStorage.setItem('user', JSON.stringify(data.user));
@@ -40,7 +40,7 @@ export const forgotPassword = (email) => {
       });
       const data = await res.json();
       localStorage.setItem("userId",JSON.stringify(data));
-      console.log(data)
+      // console.log(data)
       if (res.ok) {
         dispatch({ type: FORGOT_PASSWORD_SUCCESS });
       } else {
