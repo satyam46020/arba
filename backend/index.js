@@ -1,8 +1,9 @@
 const express = require('express');
 const cors = require('cors');
 
-const connection=require("./config/db")
-const userRouter=require("./routes/user.route");
+const connection = require('./config/db')
+const userRouter = require('./routes/user.route');
+const cartRouter = require('./routes/cart.route')
 const auth = require('./middlewares/auth');
 const category = require('./routes/category.route')
 const product = require('./routes/product.route')
@@ -17,6 +18,7 @@ app.use(express.json());
 app.use('/', userRouter)
 app.use('/category', auth, category)
 app.use('/product', auth, product)
+app.use('/cart', auth, cartRouter)
 
 const PORT = process.env.PORT ;
 

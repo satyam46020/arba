@@ -13,13 +13,15 @@ const Navbar = () => {
 
     const [cart, setCart] = useState({}); 
 
-    const savedCart = localStorage.getItem('cart');
     useEffect(() => {
-      if (savedCart) {
+        const savedCart = localStorage.getItem('cart');
+        console.log("cart item"+savedCart)
+        setCart(savedCart)
+        if (savedCart) {
             const cartData = JSON.parse(savedCart);
             setCart(cartData);
         }
-    }, [cart]);
+    }, []);
 
     const handleLogout = () => {
         dispatch(logout());
