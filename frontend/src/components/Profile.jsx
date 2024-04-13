@@ -7,6 +7,7 @@ import Navbar from './Navbar';
 const Profile = () => {
   const dispatch = useDispatch();
   const toast = useToast();
+  
   const userData = JSON.parse(localStorage.getItem('user'));
 
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
@@ -20,7 +21,7 @@ const Profile = () => {
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [isTermsModalOpen, setIsTermsModalOpen] = useState(false);
-
+  
   useEffect(() => {
     dispatch(updateProfile(userData._id, name, userName, avatar));
     const updatedUser = {
@@ -30,13 +31,15 @@ const Profile = () => {
       userName,
       email
     }
-
+    
     localStorage.setItem('user', JSON.stringify(updatedUser));
   }, [name, userName, avatar])
 
   const handleUpdateProfile = () => {
-    setIsUpdateModalOpen(false);
-    showToastSuccess("Profile updated successfully!");
+    setTimeout(()=>{
+      setIsUpdateModalOpen(false);
+      showToastSuccess("Profile updated successfully!");
+    },3000)
   };
 
   const handleOpenUpdateModal = () => {

@@ -20,12 +20,14 @@ import {
   ModalHeader,
   ModalBody,
   ModalFooter,
-  Spinner
+  Spinner,
+  useToast
 } from "@chakra-ui/react";
 
 const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const toast = useToast();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [emailError, setEmailError] = useState(false);
@@ -73,20 +75,46 @@ const Login = () => {
     setIsPasswordResetModalOpen(false);
   };
 
-  const handleEmailSubmit = () => {
+  const handleEmailSubmit = async () => {
     dispatch(forgotPassword(email));
-
-    setIsForgotPasswordModalOpen(false);
-    setIsPasswordResetModalOpen(true);
+    setTimeout(() => {
+      if(JSON.parse(localStorage.getItem("isEmail"))){
+        setIsForgotPasswordModalOpen(false);
+        setIsPasswordResetModalOpen(true);
+      } else {
+        setIsForgotPasswordModalOpen(false);
+        showToastFailure("User not Registered !!");
+      }
+    }, 2000); 
   };
 
-  const User_id = JSON.parse(localStorage.getItem("userId"))
+  const user = JSON.parse(localStorage.getItem("userDetails"))
   const handleNewPasswordSubmit = () => {
-    dispatch(updatePassword(User_id,newPassword))
-    setIsPasswordResetModalOpen(false);
+    dispatch(updatePassword(user._id, user.password, newPassword))
     if(JSON.parse(localStorage.getItem("isPasswordChanged"))){
-      alert("Password changed successfully!");
+      localStorage.setItem('isEmail', JSON.stringify(false));
+      showToastSuccess("Password updated successfully!");
+      setIsPasswordResetModalOpen(false);
+
     }
+  };
+
+  const showToastSuccess = (message) => {
+    toast({
+      title: message,
+      status: "success",
+      duration: 3000,
+      isClosable: true,
+    });
+  };
+
+  const showToastFailure = (message) => {
+    toast({
+      title: message,
+      status: "error",
+      duration: 3000,
+      isClosable: true,
+    });
   };
 
   return (

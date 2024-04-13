@@ -39,12 +39,14 @@ export const forgotPassword = (email) => {
         body: JSON.stringify({ email }),
       });
       const data = await res.json();
-      localStorage.setItem("userId",JSON.stringify(data));
-      // console.log(data)
-      if (res.ok) {
-        dispatch({ type: FORGOT_PASSWORD_SUCCESS });
-      } else {
+      localStorage.setItem("userDetails",JSON.stringify(data));
+      console.log(data)
+      if (!res.ok) {
+        localStorage.setItem('isEmail', JSON.stringify(false));
         throw new Error(data.msg || 'Request failed');
+      } else {
+        localStorage.setItem('isEmail', JSON.stringify(true));
+        dispatch({ type: FORGOT_PASSWORD_SUCCESS});
       }
     } catch (error) {
       console.error(error);

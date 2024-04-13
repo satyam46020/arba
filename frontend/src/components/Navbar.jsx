@@ -13,15 +13,6 @@ const Navbar = () => {
 
     const savedCart = localStorage.getItem('cart');
 
-    const [cart, setCart] = useState({}); 
-
-    useEffect(() => {
-        if (savedCart) {
-            const cartData = JSON.parse(savedCart);
-            setCart(cartData);
-        }
-    }, [savedCart]);
-
     const handleLogout = () => {
         dispatch(logout());
         localStorage.setItem("isopen", JSON.stringify(false));
