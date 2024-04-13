@@ -41,9 +41,12 @@ const Login = () => {
   const isAuth = useSelector((store) => store.loginReducer.isAuth);
 
   useEffect(() => {
+    console.log(isAuth)
     if (isAuth) {
       localStorage.setItem("isopen",JSON.stringify(true));
       navigate("/Home");
+    } else if (!isAuth) {
+      showToastFailure("Invalid Credentials");
     }
   }, [isAuth, navigate]);
 
@@ -58,9 +61,9 @@ const Login = () => {
     setIsLoggingIn(true);
     await dispatch(login({ email, password }));
     setIsLoggingIn(false);
-    if (!isAuth) {
-      setLoginError(true);
-    }
+    // if (!isAuth) {
+    //   showToastFailure("Invalid Credentials")
+    // }
   };
 
   const handleOpenForgotPasswordModal = () => {

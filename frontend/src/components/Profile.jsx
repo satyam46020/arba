@@ -49,15 +49,16 @@ const Profile = () => {
   const handleUpdatePassword = () => {
     if(newPassword === confirmPassword){
       dispatch(updatePassword(userData._id, oldPassword, newPassword));
-      if(JSON.parse(localStorage.getItem("isPasswordChanged"))){
-        setIsPasswordModalOpen(false);
-        showToastSuccess("Password changed successfully!");
-      }
-      else {
-        // setIsPasswordModalOpen(true);
-        showToastFailure("Old password doesn't match!");
-
-      }
+      setTimeout(()=>{
+        if(JSON.parse(localStorage.getItem("isPasswordChanged"))){
+          setIsPasswordModalOpen(false);
+          showToastSuccess("Password changed successfully!");
+        }
+        else {
+          showToastFailure("Old password doesn't match!");
+  
+        }
+      },3000)
     }
     else {
       showToastFailure("New Password and Confirm Password mismatching");
@@ -146,7 +147,7 @@ const Profile = () => {
             </FormControl>
             <FormControl mb={4}>
               <FormLabel>Confirm Password</FormLabel>
-              <Input type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
+              <Input type="text" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
             </FormControl>
           </ModalBody>
           <ModalFooter>
