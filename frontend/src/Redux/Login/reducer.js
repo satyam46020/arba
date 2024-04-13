@@ -15,7 +15,7 @@ import {
 } from "./actionTypes";
 
 const initialState = {
-  isAuth: false,
+  isAuth: "",
   token: "",
   isLoading: false,
   isError: false,
@@ -36,7 +36,7 @@ const loginReducer = (state = initialState, { type, payload }) => {
     case LOGIN_SUCCESS:
       return {
         ...state,
-        isAuth: true,
+        isAuth: "true",
         token: payload.token,
         isLoading: false,
         isError: false,
@@ -56,7 +56,7 @@ const loginReducer = (state = initialState, { type, payload }) => {
     case UPDATE_PROFILE_FAILURE:
       return {
         ...state,
-        isAuth: false,
+        isAuth: "false",
         isLoading: false,
         isError: true,
         user: ""
@@ -64,7 +64,7 @@ const loginReducer = (state = initialState, { type, payload }) => {
     case LOGOUT:
       return {
         ...state,
-        isAuth: false,
+        isAuth: "",
         token: "",
         isLoading: false,
         isError: false,

@@ -42,13 +42,14 @@ const Login = () => {
 
   useEffect(() => {
     console.log(isAuth)
-    if (isAuth) {
+    if (isAuth == "true") {
       localStorage.setItem("isopen",JSON.stringify(true));
       navigate("/Home");
-    } else if (!isAuth) {
+    } 
+    else if (isAuth == "false") {
       showToastFailure("Invalid Credentials");
     }
-  }, [isAuth, navigate]);
+  }, [isAuth, navigate, dispatch]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -61,9 +62,6 @@ const Login = () => {
     setIsLoggingIn(true);
     await dispatch(login({ email, password }));
     setIsLoggingIn(false);
-    // if (!isAuth) {
-    //   showToastFailure("Invalid Credentials")
-    // }
   };
 
   const handleOpenForgotPasswordModal = () => {

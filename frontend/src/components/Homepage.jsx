@@ -7,7 +7,6 @@ import { useNavigate } from "react-router-dom";
 
 export const Homepage = () => {
   const tcopen = JSON.parse(localStorage.getItem("isopen"))
-  // console.log(tcopen)
   const [isOpen, setIsOpen] = useState(tcopen);
   const navigate = useNavigate();
 
