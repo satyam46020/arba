@@ -1,70 +1,179 @@
-# Getting Started with Create React App
+# FullStack E-Commerce Application
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This E-commerce app provides a detailed overview of the FullStack E-Commerce Application developed based user specific products and give smooth exploring experience.
 
-## Available Scripts
+## Deployed Link
 
-In the project directory, you can run:
+[Click Here to visit the webiste](https://arba-chi.vercel.app//)
 
-### `npm start`
+[Backend](https://arba-u5ed.onrender.com/)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+[Presentation Video](https://www.loom.com/share/26e9ff63c1094ff085c8f56ffb9850b8?sid=cfc6cf20-9490-452a-a1aa-9f1dbc761bb1)
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Sample Credential
 
-### `npm test`
+**Email:** satyam46020@gmail.com
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+**Password:** 123
 
-### `npm run build`
+## Setup Instructions
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+1. Clone the repository from GitHub.
+2. Navigate to the project directory in the terminal.
+3. Install dependencies:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```bash
+npm install
+```  
+4. Start the frontend development server:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```bash
+npm start
+```
 
-### `npm run eject`
+5. Start the backend server:
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+```bash
+npm run start
+```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+6. Access the application in your web browser.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### Technology Used
+- **Backend:** Node.js, Express.js
+- **Framework:** React.js 
+- **Database:** MongoDB (NoSQL database)
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## Backend 
 
-## Learn More
+### APIs Developed
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+1. **Auth**
+   - User Schema: fullName, userName, email, password, avatar
+   - **Endpoints:**
+     - Login
+     - Register (with validation)
+     - Forgot password
+     - UpdateProfile
+   
+2. **Category**
+   - Schema: name, slug, image, owner
+   - **Endpoints:**
+     - Create Category
+     - Update Category
+     - Read Categories
+     - Delete Category
+   
+3. **Product**
+   - Schema: title, description, price, category, image, owner
+   - **Endpoints:**
+     - Create Product
+     - Update Product
+     - Read Products
+     - Delete Product
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+3. **Cart**
+   - Schema: product_id, quantity, owner
+   - **Endpoints:**
+     - Create Cart
+     - Update Cart
 
-### Code Splitting
+## Frontend
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+### Designs Implemented
 
-### Analyzing the Bundle Size
+1. **Login & Signup**
+   - User authentication with username and password
+   - Redirect to Signup page on click
+   - Persistent login state using normal JavaScript fetch API
+   
+2. **Terms & Condition Dialog**
+   - Show dialog immediately after page load
+   - Accept or Cancel options
+   
+3. **Home Page**
+   - Carousel section with at least 3 items
+   - Display products from API
+   - Add to cart functionality
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+4. **User Profile Menu**
+   - Menu with options: My Store, Profile, Logout
+   - Logout redirects to login
+   - Profile redirects to Profile page
+   - My Store redirects to My Store page
+   
+5. **Profile Page**
+   - Display user avatar, name, username, and email
+   - Button to view Terms & Conditions
+   - Buttons for updating profile (avatar, name, username) and changing password.
+   
+6. **All Products Page**
+   - All the products are visible onto the UI of product page.
+   
+7. **My Store**
+   - CURD operations for categories and products.
+   - User can be able to select category as per category section from the dropdown in product section.
 
-### Making a Progressive Web App
+8. **Cart Page**
+   - User is allowed to increase or decrease the quantity of cart item.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+### Frameworks & Libraries Used
 
-### Advanced Configuration
+- *React JS with Javascript:* Developed frontend components using Javascript for type-safety
+- *Redux Toolkit:* State management for managing user authentication, cart, and other global states
+- *React Router DOM v5:* Routing for navigating between different pages
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+## Notes
 
-### Deployment
+- Utilized Chakra UI for UI components
+- Code shared on GitHub for collaboration and version control
+- Utilized multer and cloudinary for file upload. 
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+## Screenshots
 
-### `npm run build` fails to minify
+**Login Page**
+![Login Page](/frontend/src/Assets/login.png)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+**Signup Page**
+![Signup Page](/frontend/src/Assets/signup.png)
+
+**Forgot Password**
+![Forgot Password Modal](/frontend/src/Assets/forgot_password.png)
+
+**Terms and Conditions**
+![T&C](/frontend/src/Assets/t&c.png)
+
+**Home page**
+![Home page ](/frontend/src/Assets/Homepage.png)
+
+**Navbar**
+![Navbar ](/frontend/src/Assets/navbar.png)
+
+**Product**
+![Product ](/frontend/src/Assets/Product.png)
+
+**profile**
+![profile ](/frontend/src/Assets/profile.png)
+
+**Update profile Modal**
+![Update profile Modal ](/frontend/src/Assets/update_profile.png)
+
+**Update password Modal**
+![Update password Modal ](/frontend/src/Assets/update_password.png)
+
+**Category Table**
+![Category Table ](/frontend/src/Assets/category_table.png)
+
+**Product Table**
+![Product Table ](/frontend/src/Assets/product_table.png)
+
+**Category Modal**
+![Category Modal](/frontend/src/Assets/category_modal.png)
+
+**Product Modal**
+![Product Modal](/frontend/src/Assets/product_modal.png)
+
+**Cart**
+![Cart](/frontend/src/Assets/cart.png)
+
+

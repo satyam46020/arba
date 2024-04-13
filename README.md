@@ -4,14 +4,17 @@ This E-commerce app provides a detailed overview of the FullStack E-Commerce App
 
 ## Deployed Link
 
-**Frontend** https://arba-chi.vercel.app//
+[Click Here to visit the webiste](https://arba-chi.vercel.app//)
 
-**Backend** https://arba-u5ed.onrender.com/
+[Backend](https://arba-u5ed.onrender.com/)
 
-## Demo Credential
+[Presentation Video](https://www.loom.com/share/26e9ff63c1094ff085c8f56ffb9850b8?sid=cfc6cf20-9490-452a-a1aa-9f1dbc761bb1)
 
-**Email** satyam46020@gmail.com
-**Password** 123
+## Sample Credential
+
+**Email:** satyam46020@gmail.com
+
+**Password:** 123
 
 ## Setup Instructions
 
@@ -36,73 +39,83 @@ npm run start
 
 6. Access the application in your web browser.
 
-## Backend
-
 ### Technology Used
+- **Backend:** Node.js, Express.js
+- **Framework:** React.js 
+- **Database:** MongoDB (NoSQL database)
 
-- *Framework:* React.js (backend framework)
-- *Database:* MongoDB (NoSQL database)
+## Backend 
 
 ### APIs Developed
 
-1. *Auth Flow*
+1. **Auth**
    - User Schema: fullName, userName, email, password, avatar
-   - *Endpoints:*
+   - **Endpoints:**
      - Login
      - Register (with validation)
      - Forgot password
      - UpdateProfile
    
-2. *Category CRUD*
+2. **Category**
    - Schema: name, slug, image, owner
-   - *Endpoints:*
+   - **Endpoints:**
      - Create Category
      - Update Category
      - Read Categories
      - Delete Category
    
-3. *Product CRUD*
+3. **Product**
    - Schema: title, description, price, category, image, owner
-   - *Endpoints:*
+   - **Endpoints:**
      - Create Product
      - Update Product
      - Read Products
      - Delete Product
 
+3. **Cart**
+   - Schema: product_id, quantity, owner
+   - **Endpoints:**
+     - Create Cart
+     - Update Cart
+
 ## Frontend
 
 ### Designs Implemented
 
-1. *Login & Signup*
+1. **Login & Signup**
    - User authentication with username and password
    - Redirect to Signup page on click
    - Persistent login state using normal JavaScript fetch API
    
-2. *Home Page Terms & Condition Dialog*
+2. **Terms & Condition Dialog**
    - Show dialog immediately after page load
    - Accept or Cancel options
    
-3. *User Profile Menu*
+3. **Home Page**
+   - Carousel section with at least 3 items
+   - Display products from API
+   - Add to cart functionality
+
+4. **User Profile Menu**
    - Menu with options: My Store, Profile, Logout
    - Logout redirects to login
    - Profile redirects to Profile page
    - My Store redirects to My Store page
    
-4. *Profile Page*
-   - Display user image, username, and email
+5. **Profile Page**
+   - Display user avatar, name, username, and email
    - Button to view Terms & Conditions
-   - Buttons for updating profile and changing password
+   - Buttons for updating profile (avatar, name, username) and changing password.
    
-5. *Product Home Page*
-   - Carousel section with at least 3 items
-   - Display products from API
-   - Add to cart functionality
+6. **All Products Page**
+   - All the products are visible onto the UI of product page.
    
-6. *All Products Page*
-   - Similar to Product Home Page
-   
-7. *My Store*
-   - CURD operations for categories and products
+7. **My Store**
+   - CURD operations for categories and products.
+   - User can be able to select category as per category section from the dropdown in product section.
+
+8. **Cart Page**
+   - User is allowed to increase or decrease the quantity of cart item.
 
 ### Frameworks & Libraries Used
 
@@ -114,6 +127,7 @@ npm run start
 
 - Utilized Chakra UI for UI components
 - Code shared on GitHub for collaboration and version control
+- Utilized multer and cloudinary for file upload. 
 
 ## Screenshots
 
@@ -121,7 +135,10 @@ npm run start
 ![Login Page](/frontend/src/Assets/login.png)
 
 **Signup Page**
-![Login Page](/frontend/src/Assets/login.png)
+![Signup Page](/frontend/src/Assets/signup.png)
+
+**Forgot Password**
+![Forgot Password Modal](/frontend/src/Assets/forgot_password.png)
 
 **Terms and Conditions**
 ![T&C](/frontend/src/Assets/t&c.png)
@@ -149,5 +166,14 @@ npm run start
 
 **Product Table**
 ![Product Table ](/frontend/src/Assets/product_table.png)
+
+**Category Modal**
+![Category Modal](/frontend/src/Assets/category_modal.png)
+
+**Product Modal**
+![Product Modal](/frontend/src/Assets/product_modal.png)
+
+**Cart**
+![Cart](/frontend/src/Assets/cart.png)
 
 

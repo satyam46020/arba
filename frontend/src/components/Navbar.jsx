@@ -20,7 +20,7 @@ const Navbar = () => {
     };
 
     return (
-        <Box>
+        <Box position="sticky">
             <Flex p={4} color="Red">
                 <Link to="/home">
                     <Image src={logo} alt="Logo" h={10} />
