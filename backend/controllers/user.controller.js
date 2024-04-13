@@ -93,7 +93,7 @@ const emailVerification = async (req, res) => {
     const {email} = req.body;
     let user = await User.findOne({email});
     console.log(user)
-    res.status(200).send(user._id)
+    res.status(200).send(user)
   } catch (error) {
     res.status(500).send(error);
   }
@@ -109,14 +109,15 @@ const updatePassword = async (req, res) => {
     }
 
     const passwordMatch = await bcrypt.compare(oldPassword, user.password);
-    if (!passwordMatch) {
+    const hashedPasswordMatch = oldPassword===user.password
+    if (!passwordMatch && !hashedPasswordMatch) {
       return res.status(400).send("Old password does not match");
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
     const updatedUser = await User.findByIdAndUpdate(_id, { password: hashedPassword }, { new: true });
     
-    res.send(updatedUser.password);
+    res.status(200).send(updatedUser.password);
   } catch (error) {
     res.status(500).send(error);
   }

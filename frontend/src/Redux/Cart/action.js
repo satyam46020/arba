@@ -17,7 +17,7 @@ export const fetchCart = () => {
     try {
       const token = localStorage.getItem('token');
 
-      const response = await fetch('http://localhost:5000/cart', {
+      const response = await fetch('https://arba-u5ed.onrender.com/cart', {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -42,7 +42,7 @@ export const addToCart = (productId) => {
     try {
       const token = localStorage.getItem('token');
 
-      const response = await fetch('http://localhost:5000/cart', {
+      const response = await fetch('https://arba-u5ed.onrender.com/cart', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -71,7 +71,7 @@ export const updateCart = (itemId, quantity) => {
     try {
       const token = localStorage.getItem('token');
 
-      const response = await fetch(`http://localhost:5000/cart/${itemId}`, {
+      const response = await fetch(`https://arba-u5ed.onrender.com/cart/${itemId}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',

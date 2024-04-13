@@ -53,7 +53,7 @@ export const forgotPassword = (email) => {
   };
 };
 
-export const updatePassword = (id,newPassword) => {
+export const updatePassword = (id, oldPassword, newPassword) => {
   return async (dispatch) => {
     dispatch({ type: UPDATE_PASSWORD_REQUEST });
     try {
@@ -63,7 +63,7 @@ export const updatePassword = (id,newPassword) => {
           'Content-Type': 'application/json',
           "Authorization": `Bearer ${localStorage.getItem('token')}`
         },
-        body: JSON.stringify({ _id : id, password: newPassword }),
+        body: JSON.stringify({ _id : id, oldPassword, password: newPassword }),
       });
       if (!response.ok) {
         localStorage.setItem('isPasswordChanged', JSON.stringify(false));

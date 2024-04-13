@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Flex, Image, Text, Box, Grid, Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalFooter } from '@chakra-ui/react';
+import { useToast, Button, Flex, Image, Text, Box, Grid, Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalFooter } from '@chakra-ui/react';
 import { useSelector, useDispatch } from 'react-redux';
 import { addToCart, fetchCart, updateCart } from '../Redux/Cart/action';
 import { fetchProducts } from '../Redux/Product/action';
 import Navbar from './Navbar';
+import { useNavigate } from "react-router-dom";
+
 
 const Cart = () => {
   const dispatch = useDispatch();
+  const toast = useToast();
+  const navigate = useNavigate();
 
   const carts = useSelector((state) => state.cartReducer.cartItems);
   const products = useSelector((state) => state.productReducer.products);
@@ -15,8 +19,6 @@ const Cart = () => {
   const tcopen = JSON.parse(localStorage.getItem("isopen"));
 
   const [isOpen, setIsOpen] = useState(tcopen);
-  const [checkoutClicked, setCheckoutClicked] = useState(false);
-  const [redirectHome, setRedirectHome] = useState(false);
 
   useEffect(() => {
     dispatch(fetchProducts());
@@ -32,10 +34,8 @@ const Cart = () => {
   };
 
   const handleCheckout = () => {
-    setCheckoutClicked(true);
-    setTimeout(() => {
-      setRedirectHome(true);
-    }, 2000); 
+    showToastSuccess("Thank you for Shopping!!!");
+    navigate("/home")
   };
 
   const handleConfirm = () => {
@@ -46,6 +46,15 @@ const Cart = () => {
   const handleCancel = () => {
     setIsOpen(false);
     localStorage.setItem("isopen", JSON.stringify(true));
+  };
+
+  const showToastSuccess = (message) => {
+    toast({
+      title: message,
+      status: "success",
+      duration: 3000,
+      isClosable: true,
+    });
   };
 
   return (
@@ -103,16 +112,6 @@ const Cart = () => {
       <Box align="center">
         <Button colorScheme="teal" size="md" onClick={handleCheckout} disabled={carts.length === 0}>Checkout</Button>
       </Box>
-      {checkoutClicked && (
-        <Box align="center" mt={4}>
-          <Text fontSize="lg" fontWeight="semibold">
-            Thank you for shopping!
-          </Text>
-        </Box>
-      )}
-      {redirectHome && (
-        window.location.href = '/home'
-      )}
     </>
   );
 };
