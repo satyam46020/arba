@@ -156,7 +156,7 @@ npm run start
 ![profile ](/frontend/src/Assets/profile.png)
 
 **Update profile Modal**
-![Update profile Modal ](/frontend/src/Assets/update%20profile.png)
+![Update profile Modal ](/frontend/src/Assets/update_profile.png)
 
 **Update password Modal**
 ![Update password Modal ](/frontend/src/Assets/update_password.png)
