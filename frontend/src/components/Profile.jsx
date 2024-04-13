@@ -16,11 +16,14 @@ const Profile = () => {
   const [email, setEmail] =useState(userData.email)
   const [avatar, setAvatar] = useState(userData.avatar);
   const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
+  const [oldPassword, setOldPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [isTermsModalOpen, setIsTermsModalOpen] = useState(false);
   
   var tcopen = JSON.parse(localStorage.getItem("isopen"))
   const [isOpen, setIsOpen] = useState(tcopen);
+
   useEffect(()=>{
     dispatch(updateProfile(userData._id, name, userName, avatar)); 
     const updatedUser = {
@@ -30,7 +33,9 @@ const Profile = () => {
       userName,
       email
     }
+
     localStorage.setItem('user', JSON.stringify(updatedUser));
+
   },[name,userName,avatar])
 
   const handleUpdateProfile = () => {
@@ -144,8 +149,16 @@ const Profile = () => {
           <ModalHeader>Change Password</ModalHeader>
           <ModalBody>
             <FormControl mb={4}>
+              <FormLabel>Old Password</FormLabel>
+              <Input type="password" value={oldPassword} onChange={(e) => setOldPassword(e.target.value)} />
+            </FormControl>
+            <FormControl mb={4}>
               <FormLabel>New Password</FormLabel>
               <Input type="password" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} />
+            </FormControl>
+            <FormControl mb={4}>
+              <FormLabel>Confirm Password</FormLabel>
+              <Input type="text" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
             </FormControl>
           </ModalBody>
           <ModalFooter>

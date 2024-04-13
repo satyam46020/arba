@@ -101,12 +101,22 @@ const emailVerification = async (req, res) => {
 
 const updatePassword = async (req, res) => {
   try {
-    const {_id, password} = req.body;
+    const {_id, oldPassword, password} = req.body;
+    const user = await User.findById(_id);
+    
+    if (!user) {
+      return res.status(404).send("User not found");
+    }
+
+    const passwordMatch = await bcrypt.compare(oldPassword, user.password);
+    if (!passwordMatch) {
+      return res.status(400).send("Old password does not match");
+    }
+
     const hashedPassword = await bcrypt.hash(password, 10);
-    let user = await User.findByIdAndUpdate( _id, { password : hashedPassword }, {new : true});
+    const updatedUser = await User.findByIdAndUpdate(_id, { password: hashedPassword }, { new: true });
     
-    res.send(user.password)
-    
+    res.send(updatedUser.password);
   } catch (error) {
     res.status(500).send(error);
   }
