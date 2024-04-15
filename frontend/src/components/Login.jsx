@@ -12,8 +12,6 @@ import {
   Flex,
   Center,
   Text,
-  Alert,
-  AlertIcon,
   Modal,
   ModalOverlay,
   ModalContent,

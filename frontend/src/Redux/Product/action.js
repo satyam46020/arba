@@ -9,8 +9,6 @@ import {
 
 const getToken = () => localStorage.getItem('token');
 
-// console.log(getToken())
-
 // Fetch all products
 export const fetchProducts = () => {
   return async (dispatch) => {
